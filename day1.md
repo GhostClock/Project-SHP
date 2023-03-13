@@ -45,3 +45,17 @@ jsconfig.json配置别名@提示 [@代表的是src文件夹，这样姜磊文件
     },
     "exclude": ['node_modules', 'dist'] // 在node_modules和dist里面不能使用这个别名
 } 
+
+3.项目路由分析
+vue-router
+前端所谓的路由：KV键值对
+key：URL（地址栏的路由）
+value：相应的路由组件
+
+注意：项目是上、中、下结构
+
+路由组件：
+Home首页路由组件、Search路由组件、Login路由组件、Register路由组件
+非路由组件：
+Header：首页、搜索页
+Footer：在首页、搜索页有，在登录页、注册页没有
