@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <Header/>
-    我是根组件
+    <!-- 路由组件出口 -->
+    <router-view></router-view>
     <Footer/>
   </div>
 </template>
