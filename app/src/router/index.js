@@ -25,21 +25,33 @@ export default new VueRouter({
         {
             path: '/home',
             component: Home,
+            meta: {
+                show: true
+            }
         },
         // Search
         {
             path: '/search',
             component: Search,
+            meta: {
+                show: true
+            }
         },
         // Login
         {
             path: '/login',
             component: Login,
+            meta: {
+                show: false
+            }
         },
         // Register
         {
             path: '/register',
             component: Register,
+            meta: {
+                show: false
+            }
         },
         
         // 重定向，在项目跑起来的时候。访问/，立马让其定向到首页
