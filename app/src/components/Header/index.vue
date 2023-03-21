@@ -126,8 +126,11 @@
               },
               query: {
                 k: this.keyword.toUpperCase()
-              }
-            })
+              },
+            }, 
+            () => {}, // 成功的回调
+            (error) => {}, // 失败的回调
+            )
           }
         },
     };
