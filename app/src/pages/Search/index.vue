@@ -8,7 +8,8 @@
 
 <script>
     export default {
-
+      // 路由组件是可以传递props
+      props: ['keyword']
     }
 </script>
 

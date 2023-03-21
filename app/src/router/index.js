@@ -31,12 +31,23 @@ export default new VueRouter({
         },
         // Search
         {
-            path: '/search/:keyword',
+            path: '/search/:keyword?',// parmas参数，用来占位，?表示可传可不传
             component: Search,
             name: 'Search',
             meta: {
                 show: true
-            }
+            },
+            // 路由组件能不能传递props数据？
+            // 布尔值的写法,只能传递parmas参数
+            // props: true,
+            // 对象写法:额外的给路由传递一些props
+            // props: {a: 111, b: 222}
+            // 函数写法：可以传递parmas参数、query参数，通过props传递给路由组件
+            // props: ($route) => {
+            //     return {keyword: $route.params.keyword, k: $route.query.k}
+            // },
+            // 函数写法的简写形式
+            props: ($routes) => ({...$routes.params, ...$routes.query})
         },
         // Login
         {
