@@ -62,5 +62,14 @@ baseURL: '/api'
 
 解决跨域问题：JSONP、 CROS、代理
 
+8.NProgress的使用
+// 引入nprogress进度条
+import nprogress from 'nprogress';
+// 引入进度条的样式
+import 'nprogress/nprogress.css'
+start:进度条开始 
+done：进度条结束
+进度条的颜色是可以修改的,修改样式即可
+
 
 
