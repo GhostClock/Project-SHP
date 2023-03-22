@@ -36,3 +36,22 @@ push:VueRouter类一个实例
 
 4:其余的静态组件
 HTML+ CSS + 图片资源 -- 细心【结构、样式、图片资源】
+
+5:使用postman测试接口数据
+--接口：经过测试，接口没问题
+    http://gmall-h5-api.atguigu.cn/api/product/getBaseCategoryList
+--如果服务返回的code==200，表示数据返回成功
+--整个项目，接口的前缀都有 /api 字样
+
+6:axios的二次封装
+6.1 为什么需要二次封装axios？
+请求拦截器：在发请求之前可以处理一些业务
+响应拦截器：当服务端数据返回后，可以处理一些事情
+
+6.2在项目中经常有个api文件夹【axios】
+接口中都带有 /api
+baseURL: '/api'
+6.3.如果axios基础不好，可以参考git和npm的文档
+
+
+
