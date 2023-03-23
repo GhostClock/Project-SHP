@@ -7,6 +7,8 @@ Vue.component(TypeNav.name, TypeNav)
 
 // 引入路由
 import router from '@/router'
+// 引入仓库
+import store from '@/store';
 
 import { reqCategoryList } from '@/api/';
 reqCategoryList()
@@ -16,4 +18,6 @@ new Vue({
   // 注册路由,router必须小写
   // 注册路由信息：当这里属性router的时候，组件身上都拥有，$route和$router属性
   router,
+  // 注册仓库: 组件实例身上会多了一个属性，叫$store属性
+  store,
 }).$mount('#app')

@@ -71,5 +71,43 @@ start:进度条开始
 done：进度条结束
 进度条的颜色是可以修改的,修改样式即可
 
+9.vuex状态管理库
+9.1.vuex是什么？
+vuex是官方提供的一个插件，状态管理库，集中式管理项目种组件共用的数据。
+切记，并不是所有的项目都需要Vuex，如果项目小，就完全不需要，如果项目很大，组件很多，数据很多，数据维护很费劲，就得使用Vuex
 
+state
+actions
+mutations
+getters
+modules
+
+9.2.vuex基本使用
+// state：仓库存储数据的地方
+const state = {}
+
+// actions: 处理action，可以书写自己的业务逻辑，也可以处理异步
+// 不能修改state
+const actions = {}
+
+// mutations：修改state的唯一手段
+const mutations = {}
+
+// getters: 理解为计算属性,用于简化仓库数据，让组件获取仓库的数据更加方便
+const getters = {}
+
+// 对外暴露Store类的一个实例
+export default  new Vuex.Store({
+    state,
+    mutations,
+    actions,
+    getters
+});
+
+9.3.vuex实现模块式开发
+如果项目过大，组件过多，接口也很多，数据也很多，可以让vuex实现模块化开发
+{
+    home: {},
+    search: {}
+}
 
