@@ -111,3 +111,6 @@ export default  new Vuex.Store({
     search: {}
 }
 
+10.完成TypeNav三级联动展示数据业务
+
+
