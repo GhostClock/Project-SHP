@@ -15,7 +15,6 @@ const originalReplaceh = VueRouter.prototype.replace
 // 第二个参数：成功的回调
 // 第三个参数：失败的回调
 VueRouter.prototype.push = function push(location, resolve, reject) {
-    debugger
     if (resolve && reject) {
         // call与apply的区别：
         // 相同点：都可以调用函数一次，都可以篡改函数的上下文一次

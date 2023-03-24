@@ -8,7 +8,8 @@
         <h2 class="all">全部商品分类</h2>
         <!-- 三级联动 -->
         <div class="sort">
-          <div class="all-sort-list2">
+          <!-- 利用事件委派+编程式路由导航 实现路由跳转和参数传递-->
+          <div class="all-sort-list2" @click="goSearch">
             <!-- 一级分类 -->
             <div
               class="item"
@@ -17,7 +18,7 @@
               :class="{ current: currentIndex == index }"
             >
               <h3 @mouseenter="changeIndex(index)">
-                <a href="">{{ c1.categoryName }}</a>
+                <a :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId">{{ c1.categoryName }}</a>
               </h3>
 
               <!-- 二级分类 、三级分类 -->
@@ -29,11 +30,11 @@
                 >
                   <dl class="fore">
                     <dt>
-                      <a href="">{{ c2.categoryName }}</a>
+                      <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">{{ c2.categoryName }}</a>
                     </dt>
                     <dd>
                       <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                        <a href="">{{ c3.categoryName }}</a>
+                        <a :data-categoryName="c3.categoryName" :data-category3Id="c3.categoryId">{{ c3.categoryName }}</a>
                       </em>
                     </dd>
                   </dl>
@@ -90,6 +91,42 @@ export default {
       // 鼠标移出
       this.currentIndex = -1;
     },
+
+    // 进行路由跳转的方法
+    goSearch(event) {
+      // 最好的解决方案：编程式导航+事件委派
+      // 使用事件委派有一定问题：1.点击的是哪个a标签，2.如何获取参数1 2 3分类产品的name和id
+      // 存在的问题：事件委派，是把全部子节点的事件全部委派给父节点
+      // 实际是点击a标签的时候才进行跳转。怎么确定是点击了a标签 ，怎么确定点击了是哪个a标签
+      
+      // 怎么确定是点击了a标签？
+      // 把子节点种加上自定义属性，加上data-categoryName，其余标签没有该属性
+      const element = event.target
+      // 获取到当前触发事件的结点，但是需要带有ata-categoryName这样的结点 一定是a标签
+      // 结点有一个属性式dataset属性，可以获取自定义结点属性
+      const {categoryname, category1id, category2id, category3id} = element.dataset
+      if (categoryname) {
+        // 整理路由跳转的参数
+        let location = {name: 'Search'}
+        let query = { categoryname }
+        // 怎么区别1 2 3级别的分类的a标签
+        if (category1id) {
+          // 一级a标签
+          query.category1id = category1id
+        } else if(category2id) {
+          // 二级a标签
+          query.category2id = category2id
+        } else {
+          // 三级a标签
+          query.category3id = category3id
+        }
+        // 参数整理完毕
+        location.query = query
+        // 开始路由跳转
+        console.log(location);
+        this.$router.push(location)
+      }
+    }
   },
   // 组件挂载完毕，就可以向服务器发起请求
   mounted() {
