@@ -6,6 +6,7 @@
       <!-- 事件的委派 | 实践的委托 -->
       <div @mouseleave="leaveIndex">
         <h2 class="all">全部商品分类</h2>
+        <!-- 三级联动 -->
         <div class="sort">
           <div class="all-sort-list2">
             <!-- 一级分类 -->
@@ -18,7 +19,9 @@
               <h3 @mouseenter="changeIndex(index)">
                 <a href="">{{ c1.categoryName }}</a>
               </h3>
-              <div class="item-list clearfix">
+
+              <!-- 二级分类 、三级分类 -->
+              <div class="item-list clearfix" :style="{display: currentIndex == index ? 'block' : 'none'}">
                 <div
                   class="subitem"
                   v-for="c2 in c1.categoryChild"
@@ -36,6 +39,7 @@
                   </dl>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -200,12 +204,6 @@ export default {
                   }
                 }
               }
-            }
-          }
-
-          &:hover {
-            .item-list {
-              display: block;
             }
           }
         }
