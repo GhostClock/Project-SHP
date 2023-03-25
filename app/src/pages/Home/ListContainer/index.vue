@@ -101,7 +101,18 @@
 </template>
 
 <script>
-  export default {};
+import  { mapState } from 'vuex';
+export default {
+  mounted() {
+    // 派发action，通过Vue发起请求，将数据存储在仓库当中
+    this.$store.dispatch('getBannerList')
+  },
+  computed: { 
+    ...mapState({
+      bannerList: state => state.home.bannerList,
+    })
+  }
+};
 </script>
 
 <style lang="less" scoped>
