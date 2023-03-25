@@ -134,11 +134,16 @@ export default {
           // 三级a标签
           query.category3id = category3id
         }
-        // 参数整理完毕
-        location.query = query
-        // 开始路由跳转
-        console.log(location);
-        this.$router.push(location)
+        // 判断：如果跳转的时候，带有params参数、也要捎带传递过去
+        // 合并参数
+        if (this.$route.params) {
+          location.params = this.$route.params
+          // 参数整理完毕
+          location.query = query
+          // 开始路由跳转
+          console.log('点击分类', location);
+          this.$router.push(location)
+        }
       }
     },
   },

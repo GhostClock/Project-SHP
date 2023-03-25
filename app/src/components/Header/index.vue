@@ -119,18 +119,30 @@
             // 面试题3:
             // 4.路由组件能不能传递props数据？
             // 可以传递,一共有三种写法
-            this.$router.push({
-              name: 'Search',
-              params: {
-                keyword: this.keyword,
-              },
-              query: {
-                k: this.keyword.toUpperCase()
-              },
-            }, 
-            () => {}, // 成功的回调
-            (error) => {}, // 失败的回调
-            )
+            // this.$router.push({
+            //   name: 'Search',
+            //   params: {
+            //     keyword: this.keyword,
+            //   },
+            //   query: {
+            //     k: this.keyword.toUpperCase()
+            //   },
+            // }, 
+            // () => {}, // 成功的回调
+            // (error) => {}, // 失败的回调
+            // )
+
+            // 合并参数
+            // 如果有query参数也要捎带过去
+            if (this.$route.query) {
+                const location = {
+                  name: 'Search',
+                  params: { keyword: this.keyword || undefined },
+                }
+                location.query = this.$route.query
+                console.log('点击搜索：', location);
+                this.$router.push(location)
+            } 
           }
         },
     };
