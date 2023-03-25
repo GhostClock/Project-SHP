@@ -14,6 +14,17 @@
 3.合并参数
 点击三级分类和搜索时进行query参数和parmas参数合并
 
+4.开发Home首页当中的 ListContainer组件和Floor组件
+但是这里需要知道：服务器返回的数据目前只有商品分类菜单，对于ListContainer组件和Floor组件是没有服务端数据的
+https://docschina.org/ 印记中文
+MOCK数据(模拟数据):如果想mock数据，需要用到一个插件 mockjs插件
+
+mockjs使用步骤：
+1.在项目当中的src创建一个src文件中创建一个mock文件夹
+2.准备JSON数据(在mock文件夹种创建JSON文件)
+3.把mock数据需要的图片放置到public文件夹种【public文件夹在打包的时候，会把相应的资源原封不动打包到dist文件夹中】
+4.创建mockServe.js，通过mockjs实现模拟数据
+5.把mockServe.js在入口文件中引入 至少执行一次,才能模拟数据
 
 
 
