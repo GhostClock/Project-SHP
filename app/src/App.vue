@@ -20,7 +20,12 @@
       Header,
 
       Footer,
-     }
+     },
+    mounted() {
+      // 通知Vuex发请求，获取数据,存储与仓库中 存储在home仓库
+      // 派发一个action，获取商品分类的三级列表的数据，
+      this.$store.dispatch("categoryList");
+    },
   }
 </script>
 

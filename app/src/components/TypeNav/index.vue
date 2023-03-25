@@ -4,46 +4,49 @@
     <div class="container">
       
       <!-- 事件的委派 | 实践的委托 -->
-      <div @mouseleave="leaveIndex">
+      <div @mouseleave="leaveShow" @mouseenter="enterShow">
         <h2 class="all">全部商品分类</h2>
-        <!-- 三级联动 -->
-        <div class="sort">
-          <!-- 利用事件委派+编程式路由导航 实现路由跳转和参数传递-->
-          <div class="all-sort-list2" @click="goSearch">
-            <!-- 一级分类 -->
-            <div
-              class="item"
-              v-for="(c1, index) in categoryList"
-              :key="c1.categoryId"
-              :class="{ current: currentIndex == index }"
-            >
-              <h3 @mouseenter="changeIndex(index)">
-                <a :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId">{{ c1.categoryName }}</a>
-              </h3>
+        <!-- 过度动画 -->
+        <transition name="sort">
+          <!-- 三级联动 -->
+          <div class="sort" v-show="show">
+            <!-- 利用事件委派+编程式路由导航 实现路由跳转和参数传递-->
+            <div class="all-sort-list2" @click="goSearch">
+              <!-- 一级分类 -->
+              <div
+                class="item"
+                v-for="(c1, index) in categoryList"
+                :key="c1.categoryId"
+                :class="{ current: currentIndex == index }"
+              >
+                <h3 @mouseenter="changeIndex(index)">
+                  <a :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId">{{ c1.categoryName }}</a>
+                </h3>
 
-              <!-- 二级分类 、三级分类 -->
-              <div class="item-list clearfix" :style="{display: currentIndex == index ? 'block' : 'none'}">
-                <div
-                  class="subitem"
-                  v-for="c2 in c1.categoryChild"
-                  :key="c2.categoryId"
-                >
-                  <dl class="fore">
-                    <dt>
-                      <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">{{ c2.categoryName }}</a>
-                    </dt>
-                    <dd>
-                      <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                        <a :data-categoryName="c3.categoryName" :data-category3Id="c3.categoryId">{{ c3.categoryName }}</a>
-                      </em>
-                    </dd>
-                  </dl>
+                <!-- 二级分类 、三级分类 -->
+                <div class="item-list clearfix" :style="{display: currentIndex == index ? 'block' : 'none'}">
+                  <div
+                    class="subitem"
+                    v-for="c2 in c1.categoryChild"
+                    :key="c2.categoryId"
+                  >
+                    <dl class="fore">
+                      <dt>
+                        <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">{{ c2.categoryName }}</a>
+                      </dt>
+                      <dd>
+                        <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                          <a :data-categoryName="c3.categoryName" :data-category3Id="c3.categoryId">{{ c3.categoryName }}</a>
+                        </em>
+                      </dd>
+                    </dl>
+                  </div>
                 </div>
-              </div>
 
+              </div>
             </div>
           </div>
-        </div>
+        </transition>
       </div>
       
       <nav class="nav">
@@ -73,6 +76,7 @@ export default {
     return {
       // 存储用户鼠标移上哪一个分类
       currentIndex: -1,
+      show: true
     };
   },
   methods: {
@@ -86,10 +90,19 @@ export default {
       this.currentIndex = index;
     }, 50),
     
+    // 当鼠标移入的时候，让商品分类列表进行展示
+    enterShow() {
+      this.show = true
+    },
+
     // 一级分类鼠标移出的实践回调
-    leaveIndex() {
+    leaveShow() {
       // 鼠标移出
       this.currentIndex = -1;
+      // 如果是Search组件路由的时候才进行判断隐藏
+      if (this.$route.path != '/home') {
+        this.show = false 
+      }
     },
 
     // 进行路由跳转的方法
@@ -127,12 +140,12 @@ export default {
         console.log(location);
         this.$router.push(location)
       }
-    }
+    },
   },
   // 组件挂载完毕，就可以向服务器发起请求
   mounted() {
-    // 通知Vuex发请求，获取数据,存储与仓库中 存储在home仓库
-    this.$store.dispatch("categoryList");
+    // 如果不是Home路由组件，将TypeNav进行隐藏
+    this.show = this.$route.path == '/home' 
   },
   computed: {
     ...mapState({
@@ -259,6 +272,20 @@ export default {
         }
       }
     }
+    // 过度动画的样式
+    // 过度动画开始的阶段 （进入）
+    .sort-enter {
+      height: 0px;
+    }
+    // 过度动画的结束状态（进入）
+    .sort-enter-to {
+      height: 461px;
+    }
+    // 定义过度动画的时间、速率
+    .sort-enter-active {
+      transition: all .5s linear;
+    }
+
   }
 }
 </style>
