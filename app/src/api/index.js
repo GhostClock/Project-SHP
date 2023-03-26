@@ -12,3 +12,8 @@ export const reqCategoryList = () => request.get('/product/getBaseCategoryList')
 
 // 获取banner数据
 export const reqGetBannerList = () => mockRequest.get('/banner')
+
+// 获取floor数据
+export const reqFloorList = () => mockRequest.get('/floor')
+
+

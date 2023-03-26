@@ -1,14 +1,15 @@
 // Home模块的小仓库
 
-import { reqCategoryList, reqGetBannerList } from "@/api";
+import { reqCategoryList, reqGetBannerList, reqFloorList } from "@/api";
 
 const state = {
     // state中的默认初始值别瞎写，服务器返回的是什么格式就应该是什么格式
-
     // Home页三级联动的数据
     categoryList: [],
     // Home页轮播图的数据
     bannerList: [],
+    // Floor组件数据
+    floorList: [],
 }
 
 const actions = {
@@ -27,6 +28,15 @@ const actions = {
         if (result.code == 200) {
             commit('GET_BANNER_LIST', result.data)
         }
+    },
+    // 获取floor数据
+    async getFloorList({commit}) {
+        const result = await reqFloorList()
+        console.log("Floor组件的数据：\n", result);
+        if (result.code == 200) {
+            // 提交mutations
+            commit('GET_FLOOR_LIST', result.data)
+        }
     }
 }
 
@@ -36,9 +46,13 @@ const mutations = {
     },
     GET_BANNER_LIST(state, bannerList) {
         state.bannerList = bannerList
-    }
+    },
+    GET_FLOOR_LIST(state, floorList) {
+        state.floorList = floorList
+    },
 }
 
+// 计算属性
 const getters = {}
 
 export default {
