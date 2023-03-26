@@ -12,6 +12,8 @@
               v-for="carousel in bannerList"
               :key="carousel.id"
             >
+              <!-- TODO:这样写还有问题 -->
+              <!-- <img :src="carousel.imgUrl" /> -->
               <img src="./images/banner1.jpg" />
             </div>
           </div>
@@ -108,7 +110,7 @@ export default {
     // 在nwe Swiper之前，页面中的结构必须得有，放在mounted
     // 因为dispatch当中涉及到异步语句，导致v-for遍历时还没有数据
     setTimeout(() => {
-      var mySwiper = new Swiper(".swiper", {
+      var mySwiper = new Swiper(document.querySelector(".swiper-container"), {
         loop: true, // 循环模式选项
         // 如果需要分页器
         pagination: {
