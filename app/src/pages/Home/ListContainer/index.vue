@@ -5,19 +5,15 @@
       <div class="center">
         <!--banner轮播-->
         <div class="swiper-container" id="mySwiper">
+          <!-- 轮播图 -->
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
+            <div
+              class="swiper-slide"
+              v-for="carousel in bannerList"
+              :key="carousel.id"
+            >
               <img src="./images/banner1.jpg" />
             </div>
-            <!-- <div class="swiper-slide">
-              <img src="./images/banner2.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner3.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner4.jpg" />
-            </div> -->
           </div>
           <!-- 如果需要分页器 -->
           <div class="swiper-pagination"></div>
@@ -101,17 +97,42 @@
 </template>
 
 <script>
-import  { mapState } from 'vuex';
+import { mapState } from "vuex";
+import Swiper from "swiper";
 export default {
   mounted() {
     // 派发action，通过Vue发起请求，将数据存储在仓库当中
-    this.$store.dispatch('getBannerList')
+    this.$store.dispatch("getBannerList");
+
+    // 初始化Swiper实例
+    // 在nwe Swiper之前，页面中的结构必须得有，放在mounted
+    // 因为dispatch当中涉及到异步语句，导致v-for遍历时还没有数据
+    setTimeout(() => {
+      var mySwiper = new Swiper(".swiper", {
+        loop: true, // 循环模式选项
+        // 如果需要分页器
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true, // 点击分页器也能切换
+        },
+        // 如果需要前进后退按钮
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    }, 1000);
   },
-  computed: { 
+  data() {
+    return {
+      imgUrl: "http://localhost:8080/images/banner3.jpg", // /images/banner3.jpg
+    };
+  },
+  computed: {
     ...mapState({
-      bannerList: state => state.home.bannerList,
-    })
-  }
+      bannerList: (state) => state.home.bannerList,
+    }),
+  },
 };
 </script>
 

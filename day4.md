@@ -26,5 +26,12 @@ mockjs使用步骤：
 4.创建mockServe.js，通过mockjs实现模拟数据
 5.把mockServe.js在入口文件中引入 至少执行一次,才能模拟数据
 
+5.ListContainer组件开发的重点
+安装Swiper插件：最新版本是8，先安装5版本
+npm i --serve swiper@5
+使用步骤：
+1.引入包 JS和CSS
+2.页面中结构务必要有
+3.在结构已经有的前提下，new Swiper实例【轮播图添加动态效果】
 
 
