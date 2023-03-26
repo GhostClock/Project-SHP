@@ -103,37 +103,47 @@ import { mapState } from "vuex";
 import Swiper from "swiper";
 export default {
   mounted() {
+    // mounted：组件挂载完毕，正常说，组件的结构（DOM）已经全有了
+    // 为什么Swiper实例在mounted当中直接书写不可以？因为结构不完整
     // 派发action，通过Vue发起请求，将数据存储在仓库当中
     this.$store.dispatch("getBannerList");
 
     // 初始化Swiper实例
     // 在nwe Swiper之前，页面中的结构必须得有，放在mounted
     // 因为dispatch当中涉及到异步语句，导致v-for遍历时还没有数据
-    setTimeout(() => {
-      var mySwiper = new Swiper(document.querySelector(".swiper-container"), {
-        loop: true, // 循环模式选项
-        // 如果需要分页器
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true, // 点击分页器也能切换
-        },
-        // 如果需要前进后退按钮
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-      });
-    }, 1000);
-  },
-  data() {
-    return {
-      imgUrl: "http://localhost:8080/images/banner3.jpg", // /images/banner3.jpg
-    };
   },
   computed: {
     ...mapState({
       bannerList: (state) => state.home.bannerList,
     }),
+  },
+  watch: {
+    // 监听bannerList数据的变化，因为数据发生过变化 由空数组 -> 4个元素
+    bannerList: {
+      handler(newValue, oldValue) {
+        // 通过watch监听bannerList数组元素的变化
+        // 如果执行handler方法，代表组件实例身上这个属性已经有元素了
+        // 当前函数执行，只能保证bannerList数据已经有了，但是没办法保证v-for已经执行结束了
+        // v-for执行完毕后，才能保证才有结构的
+        // nextTick: 在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM
+        this.$nextTick(() => {
+          // 当执行这个回调的时候，保证服务器数据回来，v-for执行完毕，轮播图的结构已经有了
+          new Swiper(document.querySelector(".swiper-container"), {
+            loop: true, // 循环模式选项
+            // 如果需要分页器
+            pagination: {
+              el: ".swiper-pagination",
+              clickable: true, // 点击分页器也能切换
+            },
+            // 如果需要前进后退按钮
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+          });
+        });
+      },
+    },
   },
 };
 </script>
