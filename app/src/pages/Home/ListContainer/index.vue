@@ -3,27 +3,8 @@
   <div class="list-container">
     <div class="sortList clearfix">
       <div class="center">
-        <!--banner轮播-->
-        <div class="swiper-container" ref="mySwiper">
-          <!-- 轮播图 -->
-          <div class="swiper-wrapper">
-            <div
-              class="swiper-slide"
-              v-for="carousel in bannerList"
-              :key="carousel.id"
-            >
-              <!-- TODO:这样写还有问题 -->
-              <!-- <img :src="carousel.imgUrl" /> -->
-              <img src="./images/banner1.jpg" />
-            </div>
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+        <!-- banner轮播  TODO:这样写还是有问题 -->
+        <Carousel :list="bannerList" />
       </div>
       <div class="right">
         <div class="news">
@@ -100,7 +81,6 @@
 
 <script>
 import { mapState } from "vuex";
-import Swiper from "swiper";
 export default {
   mounted() {
     // mounted：组件挂载完毕，正常说，组件的结构（DOM）已经全有了
@@ -116,34 +96,6 @@ export default {
     ...mapState({
       bannerList: (state) => state.home.bannerList,
     }),
-  },
-  watch: {
-    // 监听bannerList数据的变化，因为数据发生过变化 由空数组 -> 4个元素
-    bannerList: {
-      handler(newValue, oldValue) {
-        // 通过watch监听bannerList数组元素的变化
-        // 如果执行handler方法，代表组件实例身上这个属性已经有元素了
-        // 当前函数执行，只能保证bannerList数据已经有了，但是没办法保证v-for已经执行结束了
-        // v-for执行完毕后，才能保证才有结构的
-        // nextTick: 在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的DOM
-        this.$nextTick(() => {
-          // 当执行这个回调的时候，保证服务器数据回来，v-for执行完毕，轮播图的结构已经有了
-          new Swiper(this.$refs.mySwiper, {
-            loop: true, // 循环模式选项
-            // 如果需要分页器
-            pagination: {
-              el: ".swiper-pagination",
-              clickable: true, // 点击分页器也能切换
-            },
-            // 如果需要前进后退按钮
-            navigation: {
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            },
-          });
-        });
-      },
-    },
   },
 };
 </script>
