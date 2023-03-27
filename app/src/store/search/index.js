@@ -24,8 +24,25 @@ const mutations = {
         state.searchList = searchList
     }
 }
-// 计算属性，在项目中，为了简化数据而生 
-const getters = {}
+
+// 计算属性，
+// 在项目中主要的作用，为了简化仓库中数据而生 
+// 可把将要在组件中需要用的数据简化一下【将来在组件中使用数据的时候就方便了】
+const getters = {
+    // 当前state，是当前仓库中的state，并非是大仓库中的state
+    goodsList(state) {
+        // 如果服务数据回来了，没问题
+        // 如果网络差 或者没网，应该返回undefined
+        // 数据对象至少得是一个数组
+        return state.searchList.goodsList || []
+    },
+    trademarkList(state) {
+        return state.searchList.trademarkList || []
+    },
+    attrsList(state) {
+        return state.searchList.attrsList || []
+    }
+}
 
 export default {
     state,
