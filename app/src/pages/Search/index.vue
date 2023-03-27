@@ -340,7 +340,11 @@
     name: 'Search',
     components: {
       SearchSelector
-    }
+    },
+    mounted() {
+      // 测试接口数据
+      this.$store.dispatch('getSearchList', {})
+    },
   }
 </script>
 
