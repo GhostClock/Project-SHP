@@ -35,7 +35,7 @@ requests.interceptors.response.use((response) => {
 }, (error) => {
     // 服务器响应失败的回调
     // 终止Promise链
-    return Promise.reject(new Error('failed'))
+    return Promise.reject(new Error(error.message))
 })
 
 // 对外暴露
