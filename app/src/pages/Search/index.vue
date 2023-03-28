@@ -128,14 +128,49 @@
     components: {
       SearchSelector
     },
+    data() {
+      return {
+        // 传递给服务器的参数
+        searchParams: {
+          "category1Id": "",  // 一级分类的ID
+          "category2Id": "",  // 二级分类的ID
+          "category3Id": "",  // 三级分类的ID
+          "categoryName": "", // 分类的名字
+          "keyword": "",      // 关键字
+          "order": "",        // 排序方式
+          "pageNo": 1,        // 当前第几页
+          "pageSize": 3,      // 每页展示数据的多少
+          "props": [],        // 平台售卖属性的参数
+          "trademark": ""     // 品牌
+        }
+      }
+    },
+    // 当组件挂载完成之前执行一次，先于mounted
+    beforeMount() {
+      // 复杂的写法
+      // this.searchParams.category1Id = this.$route.query.category1id
+      // this.searchParams.category2Id = this.$route.query.category2id
+      // this.searchParams.category3Id = this.$route.query.category3id
+      // this.searchParams.categoryName = this.$route.query.categoryname
+      // this.searchParams.keyword = this.$route.params.keyword
+      // Object.assign简写形式 合并对象
+      Object.assign(this.searchParams, this.$route.query, this.$route.params)
+    },
+    // 组件挂载完毕，只执行一次
     mounted() {
-      // 测试接口数据
-      this.$store.dispatch('getSearchList', {})
+      this.getData();
     },
     computed: {
       // mapGetters里面的写法：传递的是数组，因为getters计算是没有划分模块的【没有home、search】
       ...mapGetters(['goodsList'])
-    }
+    },
+    methods: {
+      // 向服务器发起请求获取search模块数据 更加不同的参数返回不同的数据进行展示
+      // 封装成一个函数，当需要在调用的时候调用即可
+      getData() {
+        this.$store.dispatch('getSearchList', this.searchParams)
+      }
+    },
   }
 </script>
 
