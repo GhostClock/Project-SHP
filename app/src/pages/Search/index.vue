@@ -147,12 +147,7 @@
     },
     // 当组件挂载完成之前执行一次，先于mounted
     beforeMount() {
-      // 复杂的写法
-      // this.searchParams.category1Id = this.$route.query.category1id
-      // this.searchParams.category2Id = this.$route.query.category2id
-      // this.searchParams.category3Id = this.$route.query.category3id
-      // this.searchParams.categoryName = this.$route.query.categoryname
-      // this.searchParams.keyword = this.$route.params.keyword
+      // 在发请求之前，把接口需要的数据，把参数整理好
       // Object.assign简写形式 合并对象
       Object.assign(this.searchParams, this.$route.query, this.$route.params)
     },
@@ -171,6 +166,21 @@
         this.$store.dispatch('getSearchList', this.searchParams)
       }
     },
+    // 数据监听：监听组件实例身上的属性值的变化
+    watch: {
+      // 监听路由的信息是否发生变化，如果发生变化，再次发起请求
+      $route(newValue, oldValue) {
+        // 再次整理参数
+        Object.assign(this.searchParams, this.$route.query, this.$route.params)
+        console.log('搜索页的请求参数', this.searchParams);
+        // 再次发起请求
+        this.getData();
+        // 请求完毕后，应该要把三级分类的id置空，让其接受下一次的三级分类
+        this.searchParams.category1Id = 
+        this.searchParams.category2Id = 
+        this.searchParams.category3Id = ''
+      }
+    }
   }
 </script>
 
