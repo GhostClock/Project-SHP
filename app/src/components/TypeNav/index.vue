@@ -118,11 +118,11 @@ export default {
       // 获取到当前触发事件的结点，但是需要带有ata-categoryName这样的结点 一定是a标签
       // 结点有一个属性式dataset属性，可以获取自定义结点属性
       const {categoryname, category1id, category2id, category3id} = element.dataset
-      // 有categoryname表示一定是a标签
+      // 有categoryName表示一定是a标签
       if (categoryname) {
         // 整理路由跳转的参数
         let location = {name: 'Search'}
-        let query = { categoryname }
+        let query = { 'categoryName': categoryname }
         // 怎么区别1 2 3级别的分类的a标签
         if (category1id) {
           // 一级a标签
@@ -144,6 +144,7 @@ export default {
           console.log('点击分类', location);
           this.$router.push(location)
         }
+        this.currentIndex = -1;
       }
     },
   },
