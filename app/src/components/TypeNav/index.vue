@@ -122,17 +122,22 @@ export default {
       if (categoryname) {
         // 整理路由跳转的参数
         let location = {name: 'Search'}
-        let query = { 'categoryName': categoryname }
+        let query = {
+          'categoryName': categoryname,
+          'category1Id': category1id,
+          'category2Id': category2id,
+          'category3Id': category3id,
+        }
         // 怎么区别1 2 3级别的分类的a标签
         if (category1id) {
           // 一级a标签
-          query.category1id = category1id
+          query.category1Id = category1id
         } else if(category2id) {
           // 二级a标签
-          query.category2id = category2id
+          query.category2Id = category2id
         } else {
           // 三级a标签
-          query.category3id = category3id
+          query.category3Id = category3id
         }
         // 判断：如果跳转的时候，带有params参数、也要捎带传递过去
         // 合并参数
