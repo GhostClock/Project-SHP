@@ -19,11 +19,13 @@
             <li class="with-x" v-if="searchParams.keyword">{{ searchParams.keyword }}<i @click="removeKeyword">×</i></li>
             <!-- 品牌的面包屑 -->
             <li class="with-x" v-if="searchParams.trademark">{{ searchParams.trademark.split(':')[1] }}<i @click="removeTrademark">×</i></li>
+            <!-- 平台售卖属性的面包屑 -->
+            <li class="with-x" v-for="(arrtValue, index) in searchParams.props" :key="index">{{ arrtValue.split(':')[1] }}<i @click="removeAttr(index)">×</i></li>
           </ul>
         </div>
 
         <!--selector 选择器-->
-        <SearchSelector @trademarkInfo="trademarkInfo"/>
+        <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo"/>
 
         <!--details 详情-->
         <div class="details clearfix">
@@ -214,6 +216,24 @@
         // 再次发起请求
         this.getData()
       },
+      // 手机平台属性的回调 自定义事件
+      attrInfo({attrId, attrName}, attrValue) {
+        // 示例: ["2:6.0～6.24英寸:屏幕尺寸"]
+        const props = `${attrId}:${attrValue}:${attrName}`
+        // 数组去重 防止多次点击时，重复添加的问题
+        if (this.searchParams.props.indexOf(props) == -1) {
+          this.searchParams.props.push(props)
+        }
+        // 再次发起请求
+        this.getData()
+      },
+      // 移除售卖属性
+      removeAttr(index) {
+        // 整理参数
+        this.searchParams.props.splice(index, 1)
+        // 再次发起请求
+        this.getData()
+      }
     },
     // 数据监听：监听组件实例身上的属性值的变化
     watch: {

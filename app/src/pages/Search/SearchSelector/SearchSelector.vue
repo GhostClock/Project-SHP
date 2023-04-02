@@ -13,18 +13,23 @@
         <a href="javascript:void(0);">更多</a>
       </div>
     </div>
-    <!-- 网络制式 -->
+
+    <!-- 网络制式: 平台售卖属性 -->
     <div class="type-wrap" v-for="attr in attrsList" :key="attr.attrId">
+      <!-- 属性 例：颜色 -->
       <div class="fl key">{{ attr.attrName }}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li v-for="(attrValue, index) in attr.attrValueList" :key="index">
+            <!-- 属性值 例：红色 -->
+          <li v-for="(attrValue, index) in attr.attrValueList" :key="index" 
+            @click="attrInfo(attr, attrValue)">
             <a>{{ attrValue }}</a>
           </li>
         </ul>
       </div>
       <div class="fl ext"></div>
     </div>
+
   </div>
 
 </template>
@@ -43,6 +48,10 @@
         // 应该在父组件发起请求：因为父组件中searParams参数是带给服务器参数，子组件点击后，应该传递给父组件
         // 使用自定义事件传递参数
         this.$emit('trademarkInfo', trademark)
+      },
+      // 平台售卖属性点击回调
+      attrInfo(attr, attrValue) {
+        this.$emit('attrInfo', attr, attrValue)
       }
     },
   }
