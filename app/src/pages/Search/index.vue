@@ -218,14 +218,13 @@
       changeOrder(flag) {
         const originOrder = this.searchParams.order
         // 获取最开始的状态
-        const originFlag = this.searchParams.order.split(':')[0]
-        const originSort = this.searchParams.order.split(':')[1]
+        const originFlag = originOrder.split(':')[0]
+        const originSort = originOrder.split(':')[1]
         // // 一定是点击的当前高亮的
         let newOrder = ''
         if (flag == originFlag) {
           // 点击的综合
           newOrder = `${originFlag}:${originSort == 'desc' ? 'asc' : 'desc'}`
-          console.log(newOrder);
         } else {
           // 点击的是价格
           newOrder = `${flag}:${'desc'}`
