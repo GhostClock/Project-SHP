@@ -145,6 +145,12 @@
             } 
           }
         },
+        mounted() {
+          // 通过全局事件总线清楚关键字
+          this.$bus.$on('clearKeyword', () => {
+            this.keyword = ''
+          })
+        },
     };
 </script>
 

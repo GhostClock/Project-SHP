@@ -6,14 +6,17 @@
     <div class="main">
       <div class="py-container">
         <!--bread 面包屑 带有x的结构-->
-        <div class="bread">
+        <div class="bread"> 
           <ul class="fl sui-breadcrumb">
             <li>
               <a href="#">全部结果</a>
             </li>
           </ul>
           <ul class="fl sui-tag">
+            <!-- 分类的面包屑 -->
             <li class="with-x" v-if="searchParams.categoryName">{{ searchParams.categoryName }}<i @click="removeCategoryName">×</i></li>
+            <!-- 搜索关键字的面包屑 -->
+            <li class="with-x" v-if="searchParams.keyword">{{ searchParams.keyword }}<i @click="removeKeyword">×</i></li>
           </ul>
         </div>
 
@@ -173,11 +176,27 @@
         // 地址栏也需要修改--- 进行路由跳转
         // 如果路径中有params参数，也 应该带上
         this.$router.push({
-        name: 'Search',
-        params: this.$route.params ? // 如果有params参数得带上
-          this.$route.params :
+          name: 'Search',
+          params: this.$route.params ? // 如果有params参数得带上
+            this.$route.params :
+            undefined
+        })
+      },
+      // 移出面包屑的搜索关键字
+      removeKeyword() {
+        // 给服务器带的参数searchParams的keyword的值置空
+        this.searchParams.keyword = undefined
+        // 再次发起请求 
+        this.getData()
+        // 通知header组件清楚keyword
+        this.$bus.$emit('clearKeyword')
+        // 进行路由的跳转 
+        this.$router.push({
+          name: 'Search', 
+          query: this.$route.query ?  // 如果有query参数得带上
+          this.$route.query : 
           undefined
-      })
+        })
       }
     },
     // 数据监听：监听组件实例身上的属性值的变化
