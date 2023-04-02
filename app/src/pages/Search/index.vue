@@ -13,10 +13,7 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <li class="with-x" v-if="searchParams.categoryName">{{ searchParams.categoryName }}<i @click="removeCategoryName">×</i></li>
           </ul>
         </div>
 
@@ -164,6 +161,23 @@
       // 封装成一个函数，当需要在调用的时候调用即可
       getData() {
         this.$store.dispatch('getSearchList', this.searchParams)
+      },
+      // 删除历史搜索结果
+      removeCategoryName() {
+        // 带给服务器的参数都是可有可无的，如果属性值为空，可以赋值为undefined，就不会带给服务器，这样性能更好
+        this.searchParams.categoryName = 
+        this.searchParams.category1Id  =
+        this.searchParams.category2Id  =
+        this.searchParams.category3Id  =  undefined
+        this.getData()
+        // 地址栏也需要修改--- 进行路由跳转
+        // 如果路径中有params参数，也 应该带上
+        this.$router.push({
+        name: 'Search',
+        params: this.$route.params ? // 如果有params参数得带上
+          this.$route.params :
+          undefined
+      })
       }
     },
     // 数据监听：监听组件实例身上的属性值的变化
@@ -178,7 +192,7 @@
         // 请求完毕后，应该要把三级分类的id置空，让其接受下一次的三级分类
         this.searchParams.category1Id = 
         this.searchParams.category2Id = 
-        this.searchParams.category3Id = ''
+        this.searchParams.category3Id = undefined
       }
     }
   }
