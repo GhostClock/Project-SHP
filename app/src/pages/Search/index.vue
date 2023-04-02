@@ -17,11 +17,13 @@
             <li class="with-x" v-if="searchParams.categoryName">{{ searchParams.categoryName }}<i @click="removeCategoryName">×</i></li>
             <!-- 搜索关键字的面包屑 -->
             <li class="with-x" v-if="searchParams.keyword">{{ searchParams.keyword }}<i @click="removeKeyword">×</i></li>
+            <!-- 品牌的面包屑 -->
+            <li class="with-x" v-if="searchParams.trademark">{{ searchParams.trademark.split(':')[1] }}<i @click="removeTrademark">×</i></li>
           </ul>
         </div>
 
         <!--selector 选择器-->
-        <SearchSelector />
+        <SearchSelector @trademarkInfo="trademarkInfo"/>
 
         <!--details 详情-->
         <div class="details clearfix">
@@ -197,7 +199,21 @@
           this.$route.query : 
           undefined
         })
-      }
+      },
+      // 品牌自定义事件的回调
+      trademarkInfo({tmId, tmName}) {
+        // 示例: "1:苹果"
+        this.searchParams.trademark = `${tmId}:${tmName}`
+        // 再次发起请求 
+        this.getData()
+      },
+      // 移出品牌的历史搜索结果
+      removeTrademark() {
+        // 移出品牌信息
+        this.searchParams.trademark = undefined
+        // 再次发起请求
+        this.getData()
+      },
     },
     // 数据监听：监听组件实例身上的属性值的变化
     watch: {

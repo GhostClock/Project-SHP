@@ -5,7 +5,7 @@
       <div class="fl key brand">品牌</div>
       <div class="value logos">
         <ul class="logo-list">
-          <li v-for="trademark in trademarkList" :key="trademark.tmId">{{ trademark.tmName }}</li>
+          <li v-for="trademark in trademarkList" :key="trademark.tmId" @click="tradeMarkHandler(trademark)">{{ trademark.tmName }}</li>
         </ul>
       </div>
       <div class="ext">
@@ -35,7 +35,16 @@
     name: 'SearchSelector',
     computed: {
       ...mapGetters(['trademarkList', 'attrsList'])
-    }
+    },
+    methods: {
+      // 品牌的点击事件
+      tradeMarkHandler(trademark) {
+        // 点击品牌后，需要整理参数，向服务器发请求获取响应的数据进行展示
+        // 应该在父组件发起请求：因为父组件中searParams参数是带给服务器参数，子组件点击后，应该传递给父组件
+        // 使用自定义事件传递参数
+        this.$emit('trademarkInfo', trademark)
+      }
+    },
   }
 </script>
 
