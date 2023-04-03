@@ -80,8 +80,8 @@
             </ul>
           </div>
           
-          <!-- 分页器 -->
-          <Pagination />
+          <!-- 分页器:测试数据，后面需要替换 -->
+          <Pagination :pageNo="31" pageSize="3" :total="91" continues="5" />
 
         </div>
       </div>
