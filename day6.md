@@ -32,5 +32,7 @@ order属性的4种情况：
 谁有类名，谁有剪头
 3.4.
 
+Tip:在package.json -> eslintConfig -> parserOptions 添加 配置项"requireConfigFile": false 可以解决首行报 parsing error no babel config file detected for vue的问题
+
 4.很多电商平台为什么要使用分页？
 数据量大，一页显示不全
