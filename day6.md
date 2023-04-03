@@ -34,5 +34,7 @@ order属性的4种情况：
 
 Tip:在package.json -> eslintConfig -> parserOptions 添加 配置项"requireConfigFile": false 可以解决首行报 parsing error no babel config file detected for vue的问题
 
+Tip2:在package.json -> eslintConfig -> rules 添加配置项 "vue/multi-word-component-names": "off" 可以解决 component name pagination should always be multi-word 的问题
+
 4.很多电商平台为什么要使用分页？
 数据量大，一页显示不全
