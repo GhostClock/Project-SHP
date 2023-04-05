@@ -3,7 +3,7 @@
 import { reqGoodsInfo } from "@/api";
 
 const state = {
-    goodsInfo: {}
+    goodInfo: {}
 }
 
 const actions = {
@@ -18,8 +18,8 @@ const actions = {
 }
 
 const mutations = {
-    GET_GOODS_INFO(state, goodsInfo) {
-        state.goodInfo = goodsInfo
+    GET_GOODS_INFO(state, goodInfo) {
+        state.goodInfo = goodInfo
     }
 }
 
@@ -27,7 +27,7 @@ const mutations = {
 const getters = {
     categoryView(state) {
         // 当前计算出来的属性值至少是一个空对象
-        return state.goodsInfo.categoryView || {}
+        return state.goodInfo.categoryView || {}
     },
     skuInfo(state) {
         return state.goodInfo?.skuInfo || {}

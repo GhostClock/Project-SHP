@@ -17,7 +17,7 @@
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom />
+          <Zoom :skuImageList="skuImageList"/>
 
           <!-- 小图列表 -->
           <ImageList />
@@ -356,7 +356,6 @@
 
   export default {
     name: 'Detail',
-    
     components: {
       ImageList,
       Zoom
@@ -366,7 +365,12 @@
       this.$store.dispatch('getGoodsInfo', this.$route.params.skuId)
     },
     computed: {
-      ...mapGetters(['categoryView', 'skuInfo'])
+      ...mapGetters(['categoryView', 'skuInfo']),
+      // 给子组件数组
+      skuImageList() {
+        // 如果服务端数据没有回来，则返回空数组
+        return this.skuInfo.skuImageList || []
+      }
     }
   }
 </script>
