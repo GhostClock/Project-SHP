@@ -78,9 +78,9 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt">
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input autocomplete="off" class="itxt" v-model="skuNum" @change="changeSkuNum"/>
+                <a href="javascript:" class="plus" @click="skuNum ++">+</a>
+                <a href="javascript:" class="mins" @click="skuNum > 1 ? skuNum-- : skuNum=1">-</a>
               </div>
               <div class="add">
                 <a href="javascript:">加入购物车</a>
@@ -341,6 +341,12 @@
 
   export default {
     name: 'Detail',
+    data() {
+      return {
+        // 购买产品的个数
+        skuNum: 1,
+      }
+    },
     components: {
       ImageList,
       Zoom
@@ -366,6 +372,18 @@
         });
         // 当前点击的置为1
         spuValue.isChecked = '1'
+      },
+      // 表单修改数据
+      changeSkuNum(event) {
+        // 校验用户的输入
+        let value = event.target.value * 1
+        // 处理非法数据 出现NaN或者小于1
+        if (isNaN(value) || value < 1) {
+          this.skuNum = 1
+        } else {
+          // 正常数据 大于1的 且 是整数 
+          this.skuNum = parseInt(value)
+        }
       }
     },
   }
