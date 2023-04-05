@@ -25,12 +25,18 @@ const mutations = {
 
 // 简化数据
 const getters = {
+    // 路径导航数据  面包屑
     categoryView(state) {
         // 当前计算出来的属性值至少是一个空对象
         return state.goodInfo.categoryView || {}
     },
+    // 商品信息数据
     skuInfo(state) {
         return state.goodInfo?.skuInfo || {}
+    },
+    // 商品售卖属性数据
+    spuSaleAttrList() {
+        return state.goodInfo.spuSaleAttrList || []
     }
 }
 
