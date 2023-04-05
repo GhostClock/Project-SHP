@@ -30,7 +30,7 @@ const getters = {
         return state.goodsInfo.categoryView || {}
     },
     skuInfo(state) {
-        return state.goodInfo.skuInfo || {}
+        return state.goodInfo?.skuInfo || {}
     }
 }
 

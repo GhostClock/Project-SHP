@@ -136,7 +136,7 @@
       ...mapGetters(['goodsList']),
       // 获取一共有多少条数据
       ...mapState({
-        total: state => state.search.searchList.total,
+        total: state => state.search.searchList?.total || 0,
       }),
       // 综合高亮
       isOrderByOne() {
