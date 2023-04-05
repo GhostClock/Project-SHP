@@ -1,17 +1,17 @@
 <template>
     <div class="pagination">
-        <button>上一页</button>
-        <button>1</button>
-        <button>···</button>
-        <button>3</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button>7</button>
+        <!-- 上 -->
+        <button :disabled="pageNo == 1" @click="$emit('getPageNo', pageNo - 1)">上一页</button>
+        <button v-if="startNumEndNum.start > 1" @click="$emit('getPageNo', 1)">1</button>
+        <button v-if="startNumEndNum.start > 2">···</button>
 
-        <button>···</button>
-        <button>{{ totalPage }}</button>
-        <button>下一页</button>
+        <!-- 中 -->
+        <button v-for="(page, index) in startNumEndNum.end" :key="index" v-if="(page >= startNumEndNum.start)" @click="$emit('getPageNo', page)">{{ page }}</button>
+
+        <!-- 下 -->
+        <button v-if="startNumEndNum.end < totalPage - 1">···</button>
+        <button v-if="startNumEndNum.end < totalPage" @click="$emit('getPageNo', totalPage)">{{ totalPage }}</button>
+        <button :disabled="pageNo == totalPage" @click="$emit('getPageNo', pageNo + 1)">下一页</button>
 
         <button style="margin-left: 30px">共 {{ total }} 条</button>
     </div>
@@ -20,7 +20,25 @@
 <script>
 export default {
     name: "Pagination",
-    props: ["pageNo", "pageSize", "total", "continues"],
+    props: {
+        // 限定参数类型，必须为参数 且必须传入
+        pageNo: {
+            type: Number,
+            required: true,
+        },
+        pageSize: {
+            type: Number,
+            required: true,
+        },
+        total: {
+            type: Number,
+            required: true,
+        },
+        continues: {
+            type: Number,
+            required: true,
+        }
+    },
     computed: {
         // 总共的页数
         totalPage() {
@@ -28,7 +46,7 @@ export default {
             return Math.ceil(this.total / this.pageSize)
         },
         // 计算出连续的页面的起始数字与结束数字【连续的页码数字：至少是5】
-        startNumEenNum() {
+        startNumEndNum() {
             // 向对象上的实例进行结果
             const { continues, pageNo, totalPage } = this
             // 先定义开始数字和结束数字
@@ -59,9 +77,8 @@ export default {
                     end = totalPage, start = totalPage - continues + 1
                 }
             }
-
-            return { start, end }
-        }
+            return {start, end}
+        },
     },
 }
 </script>
@@ -69,6 +86,7 @@ export default {
 <style lang="less" scoped>
 .pagination {
     text-align: center;
+
     button {
         margin: 0 5px;
         background-color: #f4f4f5;

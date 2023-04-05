@@ -81,8 +81,13 @@
           </div>
           
           <!-- 分页器:测试数据，后面需要替换 -->
-          <Pagination :pageNo="31" pageSize="3" :total="91" continues="5" />
-
+          <Pagination 
+            :pageNo=searchParams.pageNo 
+            :pageSize=searchParams.pageSize 
+            :total=total 
+            :continues=5 
+            @getPageNo="getPageNo"
+          />
         </div>
       </div>
     </div>
@@ -91,7 +96,7 @@
 
 <script>
   import SearchSelector from './SearchSelector/SearchSelector'
-  import { mapGetters } from "vuex";
+  import { mapGetters, mapState } from "vuex";
 
   export default {
     name: 'Search',
@@ -128,6 +133,10 @@
     computed: {
       // mapGetters里面的写法：传递的是数组，因为getters计算是没有划分模块的【没有home、search】
       ...mapGetters(['goodsList']),
+      // 获取一共有多少条数据
+      ...mapState({
+        total: state => state.search.searchList.total,
+      }),
       // 综合高亮
       isOrderByOne() {
         return this.searchParams.order.indexOf('1') != -1
@@ -206,7 +215,7 @@
         this.getData()
       },
       // 移除售卖属性
-      removeAttr(index) {
+      removeAttr(index ) {
         // 整理参数
         this.searchParams.props.splice(index, 1)
         // 再次发起请求
@@ -233,6 +242,13 @@
         // 将新的orde赋值给searchParams
         this.searchParams.order = newOrder
         // 再次发起请求
+        this.getData()
+      },
+      // 这是自定义事件的回调函数 - 获取当前第几页
+      getPageNo(pageNo) {
+        // 整理参数，向服务器请求数据
+        this.searchParams.pageNo = pageNo
+        // 再次发起请求 
         this.getData()
       }
     },
