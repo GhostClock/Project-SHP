@@ -12,18 +12,27 @@ const actions = {
         let result = await reqGoodsInfo(skuId)
         console.log("商品详情数据：\n", result);
         if (result.code == 200) {
-            commit('GET_GOODES_INFO', result.data)
+            commit('GET_GOODS_INFO', result.data)
         }
     }
 }
 
 const mutations = {
-    GET_GOODES_INFO(state, goodsInfo) {
-        state.goodsInfo = goodsInfo
+    GET_GOODS_INFO(state, goodsInfo) {
+        state.goodInfo = goodsInfo
     }
 }
 
-const getters = {}
+// 简化数据
+const getters = {
+    categoryView(state) {
+        // 当前计算出来的属性值至少是一个空对象
+        return state.goodsInfo.categoryView || {}
+    },
+    skuInfo(state) {
+        return state.goodInfo.skuInfo || {}
+    }
+}
 
 export default {
     state,
