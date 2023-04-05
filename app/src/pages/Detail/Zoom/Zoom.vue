@@ -1,11 +1,14 @@
 <template>
   <div class="spec-preview">
     <img :src="skuImageList[currentIndex]?.imgUrl" />
-    <div class="event"></div>
+    <!-- 鼠标移动的视图 -->
+    <div class="event" @mousemove="handler"></div>
+    <!-- 放大后的大图 -->
     <div class="big">
-      <img :src="skuImageList[currentIndex]?.imgUrl" />
+      <img :src="skuImageList[currentIndex]?.imgUrl" ref="bigImage"/>
     </div>
-    <div class="mask"></div>
+    <!-- 绿色半透明蒙版 -->
+    <div class="mask" ref="mask"></div>
   </div>
 </template>
 
@@ -23,6 +26,29 @@
       this.$bus.$on('getZoomIndex', (index) => {
         this.currentIndex = index
       })
+    },
+    methods: {
+      handler(event) {
+        let mask = this.$refs.mask
+        let bigImage = this.$refs.bigImage
+
+        // 得到左边、上边 移动的位置
+        let left = event.offsetX - mask.offsetWidth / 2
+        let top = event.offsetY - mask.offsetHeight / 2
+        // 约束范围
+        if (left < 0) left = 0
+        if (left > mask.offsetWidth) left = mask.offsetWidth
+        
+        if (top < 0) top = 0
+        if (top > mask.offsetHeight) top = mask.offsetHeight
+        
+        // 重新赋值
+        mask.style.left = left + 'px'
+        mask.style.top = top + 'px'
+
+        bigImage.style.left = - 2 * left + 'px'
+        bigImage.style.top = - 2 * top + 'px'
+      }
     },
   }
 </script>
