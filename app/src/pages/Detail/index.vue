@@ -68,7 +68,12 @@
               <div class="choosed"></div>
               <dl v-for="spuSaleAttr in spuSaleAttrList" :key="spuSaleAttr.id">
                 <dt class="title">{{ spuSaleAttr.saleAttrName }}</dt>
-                <dd changepirce="0" :class="{active:spuSaleAttrValue.isChecked == '1'}" v-for="spuSaleAttrValue in spuSaleAttr.spuSaleAttrValueList" :key="spuSaleAttrValue.id">{{ spuSaleAttrValue.saleAttrValueName }}</dd>
+                <dd changepirce="0" :class="{active:spuSaleAttrValue.isChecked == '1'}" 
+                  v-for="spuSaleAttrValue in spuSaleAttr.spuSaleAttrValueList" 
+                  :key="spuSaleAttrValue.id" 
+                  @click="changeActive(spuSaleAttrValue, spuSaleAttr.spuSaleAttrValueList)">
+                  {{ spuSaleAttrValue.saleAttrValueName }}
+                </dd>
               </dl>
             </div>
             <div class="cartWrap">
@@ -351,7 +356,18 @@
         // 如果服务端数据没有回来，则返回空数组
         return this.skuInfo.skuImageList || []
       }
-    }
+    },
+    methods: {
+      // 商品属性点击高亮切换
+      changeActive(spuValue, spuValueList) {
+        // 遍历全部的属性值都置为0
+        spuValueList.forEach(spu => {
+          spu.isChecked = '0'
+        });
+        // 当前点击的置为1
+        spuValue.isChecked = '1'
+      }
+    },
   }
 </script>
 
