@@ -2,15 +2,15 @@
     <div class="pagination">
         <!-- 上 -->
         <button :disabled="pageNo == 1" @click="$emit('getPageNo', pageNo - 1)">上一页</button>
-        <button v-if="startNumEndNum.start > 1" @click="$emit('getPageNo', 1)">1</button>
+        <button v-if="startNumEndNum.start > 1" @click="$emit('getPageNo', 1)" :class="{active: pageNo == 1}">1</button>
         <button v-if="startNumEndNum.start > 2">···</button>
 
         <!-- 中 -->
-        <button v-for="(page, index) in startNumEndNum.end" :key="index" v-if="(page >= startNumEndNum.start)" @click="$emit('getPageNo', page)">{{ page }}</button>
+        <button v-for="(page, index) in startNumEndNum.end" :key="index" v-if="(page >= startNumEndNum.start)" @click="$emit('getPageNo', page)" :class="{active: pageNo == page}">{{ page }}</button>
 
         <!-- 下 -->
         <button v-if="startNumEndNum.end < totalPage - 1">···</button>
-        <button v-if="startNumEndNum.end < totalPage" @click="$emit('getPageNo', totalPage)">{{ totalPage }}</button>
+        <button v-if="startNumEndNum.end < totalPage" @click="$emit('getPageNo', totalPage)" :class="{active: pageNo == totalPage}">{{ totalPage }}</button>
         <button :disabled="pageNo == totalPage" @click="$emit('getPageNo', pageNo + 1)">下一页</button>
 
         <button style="margin-left: 30px">共 {{ total }} 条</button>
@@ -116,6 +116,9 @@ export default {
             color: #fff;
         }
     }
+}
+.active {
+    background: skyblue;
 }
 </style>
   
