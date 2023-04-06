@@ -82,8 +82,12 @@
                 <a href="javascript:" class="plus" @click="skuNum ++">+</a>
                 <a href="javascript:" class="mins" @click="skuNum > 1 ? skuNum-- : skuNum=1">-</a>
               </div>
+              <!-- 加入购物车 -->
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <!-- 这里在加入购物车路由之前，需要发起请求，
+                  把你购买的信息通过请求发送给服务器，然后服务器进行相应的存储 
+                -->
+                <a @click="addShopCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -383,6 +387,23 @@
         } else {
           // 正常数据 大于1的 且 是整数 
           this.skuNum = parseInt(value)
+        }
+      },
+      // 加入购物车的回调函数
+      async addShopCart() {
+        // 发起请求
+        /*
+          也要判断加入购物车是否成功与否
+          即调用仓库中函数：addOrUpdateShopCart
+          返回的是一个Promise，要么成功，要么失败
+        */
+        try {
+          let result = await this.$store.dispatch('addOrUpdateShopCart', 
+                              { skuId: this.$route.params.skuId, skuNum: this.skuNum })
+          // 成功：发起路由跳转
+        } catch (error) {
+          // 失败：作失败处理
+          console.log(error);
         }
       }
     },
