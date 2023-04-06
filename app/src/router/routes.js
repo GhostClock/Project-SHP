@@ -6,10 +6,11 @@ import Search from '@/pages/Search'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import Detail from '@/pages/Detail'
+import AddCartSuccess from "@/pages/AddCartSuccess";
 
 // 配置路由信息
 export default [
-    // Home
+    // Home 主页
     {
         path: '/home',
         component: Home,
@@ -17,7 +18,7 @@ export default [
             show: true
         }
     },
-    // Search
+    // Search 搜索
     {
         path: '/search/:keyword?',// parmas参数，用来占位，?表示可传可不传
         component: Search,
@@ -37,7 +38,7 @@ export default [
         // 函数写法的简写形式
         props: ($routes) => ({ ...$routes.params, ...$routes.query })
     },
-    // Login
+    // Login 登录
     {
         path: '/login',
         component: Login,
@@ -45,7 +46,7 @@ export default [
             show: false
         }
     },
-    // Register
+    // Register 注册
     {
         path: '/register',
         component: Register,
@@ -53,10 +54,19 @@ export default [
             show: false
         }
     },
-    // Detail
+    // Detail 商品详情
     {
         path: '/detail/:skuId',
         component: Detail,
+        meta: {
+            show: true
+        }
+    },
+    // AddCartSuccess 添加到购物车成功
+    {
+        path: '/addcartsuccess',
+        name: 'AddCartSuccess',
+        component: AddCartSuccess,
         meta: {
             show: true
         }

@@ -16,7 +16,8 @@ const actions = {
         }
     },
     // 将产品添加到购物车中
-    async addOrUpdateShopCart({ commit }, { skuId, skuNum }) {
+    async addOrU pdateShopCart({ commit }, { skuId, skuNum }) {
+        // async函数执行返回的结果一定是Promise【要么成功 要么失败】
         let result = await reqAddOrUpdateShopCart(skuId, skuNum)
         // 返回的是Promise
         if (result.code == 200) {

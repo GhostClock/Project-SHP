@@ -398,12 +398,18 @@
           返回的是一个Promise，要么成功，要么失败
         */
         try {
-          let result = await this.$store.dispatch('addOrUpdateShopCart', 
+          let success = await this.$store.dispatch('addOrUpdateShopCart', 
                               { skuId: this.$route.params.skuId, skuNum: this.skuNum })
-          // 成功：发起路由跳转
+          if (success) {
+            // 成功：发起路由跳转
+            this.$router.push({
+              name: 'AddCartSuccess'
+            })
+          }
         } catch (error) {
           // 失败：作失败处理
           console.log(error);
+          alert(error.message)
         }
       }
     },
