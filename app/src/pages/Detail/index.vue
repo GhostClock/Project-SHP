@@ -402,8 +402,14 @@
                               { skuId: this.$route.params.skuId, skuNum: this.skuNum })
           if (success) {
             // 成功：发起路由跳转
+            // 将商品的信息传递到下一级路由组件
+            // 一些简单的数据skuNum通过query形式传递给下一级路由
+            // 复杂的数据，通过会话存储， 不持久，会话结束数据消失
+            // 本地存储或者会话存储，存储的都是字符串
+            sessionStorage.setItem('SKUINFO', JSON.stringify(this.skuInfo))
             this.$router.push({
-              name: 'AddCartSuccess'
+              name: 'AddCartSuccess',
+              query: {skuNum: this.skuNum}
             })
           }
         } catch (error) {
