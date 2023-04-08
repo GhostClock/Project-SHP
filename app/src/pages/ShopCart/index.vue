@@ -23,9 +23,9 @@
             <span class="price">{{ cart.skuPrice }}</span>
           </li>
           <li class="cart-list-con5">
-            <a href="javascript:void(0)" class="mins">-</a>
-            <input autocomplete="off" type="text" :value="cart.skuNum" minnum="1" class="itxt" >
-            <a href="javascript:void(0)" class="plus">+</a>
+            <a href="javascript:void(0)" class="mins" @click="changeSkuNum('mins', -1, cart)">-</a>
+            <input autocomplete="off" type="text" :value="cart.skuNum" minnum="1" class="itxt" @click="changeSkuNum('input', $event.target.value * 1, cart)">
+            <a href="javascript:void(0)" class="plus" @click="changeSkuNum('plus', 1, cart)">+</a>
           </li>
           <li class="cart-list-con6">
             <!-- 单价 x 个数 -->
@@ -75,7 +75,46 @@
       // 获取个人购物车数据
       getData() {
         this.$store.dispatch('getCartList')
-      }
+      },
+      // 修改某一个产品的个数
+      async changeSkuNum(type, disNum, cart) {
+        // type:类型
+        // disNum: +:变化量+1, -:变化量-1, input:最终的个数 不是变化量
+        // cart：点击的是哪个产品 里面有id
+        switch (type) {
+          case 'mins':
+            // 减
+            // 如果产品的个数大于1 才能传-1
+            disNum = cart.skuNum > 1 ? -1 : 0
+            break;
+          case 'input':
+            // 输入
+            // 输入是非法的 传给服务器的变化量为0
+            if (isNaN(disNum) || disNum < 1) {
+              disNum = 0
+            } else {
+              // 正常情况 上传的还是变化的量 用户输入-产品起始的个数
+              disNum = parseInt(disNum) - cart.skuNum
+            }
+            // 三目运算符下发
+            // disNum = (isNaN(disNum) || disNum < 1) ? 0 : parseInt(disNum) - cart.skuNum
+            break
+          case 'plus':
+            // 加
+            disNum = 1
+            break;
+        }
+        console.log(type, " ", disNum, " ", cart.skuId);
+        // 发起请求 修改产品数量
+        try {
+          // 修改成功
+          await this.$store.dispatch('addOrUpdateShopCart', { skuId: cart.skuId, skuNum: disNum })
+          // 再次获取购物车列表
+          this.getData()
+        } catch (error) {
+          alert(error.message)
+        }
+      },
     },
     computed: {
       ...mapGetters(['cartInfoList']),
