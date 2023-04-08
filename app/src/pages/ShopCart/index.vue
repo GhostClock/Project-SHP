@@ -46,9 +46,12 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isAllChecked">
+        <input class="chooseAll" 
+          type="checkbox" 
+          :checked="isAllChecked && cartInfoList.length > 0" 
+          @change="updateAllCartChecked">
         <span>全选</span>
-      </div>
+      </div> 
       <div class="option">
         <a @click="deletaAllCheckedCart">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
@@ -154,7 +157,19 @@
         } catch (error) {
           alert(error.message)
         }
-      }
+      },
+      // 修改全部商品选中的状态
+      async updateAllCartChecked(event) {
+        try {
+          let isChecked = event.target.checked ? '1' : '0'
+          // 派发一个action
+          await this.$store.dispatch('updataAllCartIsChecked', isChecked)
+          // 再发起请求
+          this.getData()
+        } catch (error) {
+          alert(error.message)
+        }
+      },
     },
     computed: {
       ...mapGetters(['cartInfoList']),

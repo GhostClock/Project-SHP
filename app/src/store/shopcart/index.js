@@ -53,6 +53,15 @@ const actions = {
         });
         // 只要全部promise都成功返回成功，如果有一个失败，即为失败
         return Promise.all(promiseAll)
+    },
+    // 修改全部产品的状态
+    updataAllCartIsChecked({ dispatch, getters }, isChecked) {
+        let promiseAll = []
+        getters.cartInfoList.forEach(cart => {
+            let promise = dispatch('updateCheckedById', {skuId: cart.skuId, isChecked})
+            promiseAll.push(promise)
+        })
+        return Promise.all(promiseAll)
     }
 }
 
