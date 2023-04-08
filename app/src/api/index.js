@@ -60,3 +60,11 @@ export const reqCartList = () => request({
     url: '/cart/cartList',
     method: 'get'
 })
+
+// 删除购物车商品
+// URL: /api/cart/deleteCart/{skuId}
+// DELETE
+export const reqDeleteCartById = (skuId) => request({
+    url: `/cart/deleteCart/${skuId}`,
+    method: 'delete'
+})

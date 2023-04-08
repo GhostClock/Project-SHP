@@ -1,5 +1,5 @@
 
-import { reqCartList } from '@/api';
+import { reqCartList, reqDeleteCartById } from '@/api';
 
 const state = {
     cartList: []
@@ -13,6 +13,18 @@ const actions = {
         if (result.code == 200) {
             commit('GET_CART_LIST', result.data)
         }
+    },
+    // 删除某一个商品
+    async deleteCartListBySkuId({ commit }, skuId) {
+        let result = await reqDeleteCartById(skuId)
+        console.log("删除产品数据: ", result);
+        // 返回的是Promise
+        if (result.code == 200) {
+            console.log("删除产品成功");
+            return true
+        }
+        console.log("删除产品失败");
+        return Promise.reject(new Error('删除产品失败'))
     }
 }
 
