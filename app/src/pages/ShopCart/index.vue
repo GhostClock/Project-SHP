@@ -13,7 +13,12 @@
       <div class="cart-body">
         <ul class="cart-list" v-for="cart in cartInfoList" :key="cart.id">
           <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list" :checked="cart.isChecked == 1">
+            <input 
+              type="checkbox" 
+              name="chk_list" 
+              :checked="cart.isChecked == 1" 
+              @change="updateChecken(cart, $event)"
+            />
           </li>
           <li class="cart-list-con2">
             <img :src="cart.imgUrl">
@@ -127,6 +132,18 @@
           alert(error.message)
         }
       },
+      // 修改商品的勾选状态
+      // 也要增加节流
+      updateChecken:throttle(async function(cart, event) {
+        try {
+          let isChecked = event.target.checked ? '1' : 0
+          await this.$store.dispatch('updateCheckedById', { skuId: cart.skuId, isChecked })
+          // 如果修改成功，再次发请求请求刷新列表
+          this.getData()
+        } catch (error) {
+          alert(error.message)
+        }
+      }, 500),
     },
     computed: {
       ...mapGetters(['cartInfoList']),
