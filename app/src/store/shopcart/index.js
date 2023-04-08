@@ -37,6 +37,23 @@ const actions = {
         console.log("修改购物车产品的状态失败");
         return Promise.reject(new Error('修改购物车产品的状态失败'))
     },
+    // 删除全部勾选的产品
+    deletaAllCheckedCart({ dispatch, getters }) {
+        // context： 小仓库，context里面有commit，dispatch，getters、state
+        // commit： 提交mutations修改state
+        // getter：计算属性
+        // state：当前仓库数据
+        // 获取购物车种全部的产品
+        let promiseAll = []
+        getters.cartInfoList.forEach(cart => {
+            // 删除勾选的
+            let promise = cart.isChecked == 1 ? dispatch('deleteCartListBySkuId', cart.skuId) : ''
+            // 将每次返回的Promise否存放在数组种
+            promiseAll.push(promise)
+        });
+        // 只要全部promise都成功返回成功，如果有一个失败，即为失败
+        return Promise.all(promiseAll)
+    }
 }
 
 const mutations = {
