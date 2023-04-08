@@ -8,13 +8,19 @@ import mockRequest from './mockRequest';
 // /api/product/getBaseCategoryList GET 无请求参数
 
 // 发起请求: axios发起请求返回的结果式Promise对象
-export const reqCategoryList = () => request.get('/product/getBaseCategoryList')
+export const reqCategoryList = () => request.get(
+    '/product/getBaseCategoryList'
+)
 
 // 获取banner数据
-export const reqGetBannerList = () => mockRequest.get('/banner')
+export const reqGetBannerList = () => mockRequest.get(
+    '/banner'
+)
 
 // 获取floor数据
-export const reqFloorList = () => mockRequest.get('/floor')
+export const reqFloorList = () => mockRequest.get(
+    '/floor'
+)
 
 // 获取搜索模块的数据  地址：/api/list 方式：POST 
 /* 参数：
@@ -30,18 +36,20 @@ export const reqFloorList = () => mockRequest.get('/floor')
     }
 */
 // 当前这个接口，传递的参数至少应该式一个空对象 {}
-export const reqGetSearchInfo =
-    (parmas) => request({
-        url: "/list",
-        method: "post",
-        data: parmas
-    })
+export const reqGetSearchInfo = (parmas) => request({
+    url: "/list",
+    method: "post",
+    data: parmas
+})
 
 // 获取商品详情的接口 
 // URL:/api/item/{ skuId } 
 // GET
 // skuId string
-export const reqGoodsInfo = (skuId) => request({url: `item/${skuId}`, method: 'get'})
+export const reqGoodsInfo = (skuId) => request({
+    url: `item/${skuId}`, 
+    method: 'get'
+})
 
 // 将产品添加到购物车中 或者 更新某一个产品的个数
 // URL: /api/cart/addToCart/{ skuId }/{ skuNum }
