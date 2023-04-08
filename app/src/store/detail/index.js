@@ -1,9 +1,13 @@
 // 商品详情的仓库
 
 import { reqGoodsInfo, reqAddOrUpdateShopCart } from "@/api";
+// 封装游客身份模块-- 生成一个随机的字符串
+import { getUUID } from "@/utils/uuid_token";
 
 const state = {
-    goodInfo: {}
+    goodInfo: {},
+    // 游客的临时身份
+    uuid_token: getUUID(),
 }
 
 const actions = {

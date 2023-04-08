@@ -53,4 +53,10 @@ export const reqAddOrUpdateShopCart = (skuId, skuNum) => request({
     method: 'post'
 })
 
-
+// 获取购物车列表
+// URL: /api/cart/cartList
+// GET
+export const reqCartList = () => request({
+    url: '/cart/cartList',
+    method: 'get'
+})
