@@ -1,10 +1,19 @@
 // 登录和注册的仓库
 
-import { reqGetCode, reqUserRegister } from "@/api";
+import { reqGetCode, reqUserRegister, reqUserLogin } from "@/api";
 
 const state = {
     // 验证码
     code: '',
+
+    // name
+    name: '',
+
+    // nickName
+    nickName: '',
+
+    // token
+    token: '',
 }
 
 const actions = {
@@ -33,12 +42,32 @@ const actions = {
         } 
         console.log('用户注册失败');
         return Promise.reject(new Error(message, ok))
+    },
+    // 用户登录
+    async userLogin({ commit }, user) {
+        let result = await reqUserLogin(user)
+        console.log('用户登录', result);
+        let code = result.code
+        let message = result.message
+        let ok = result.ok
+        // token:用户唯一标识
+        // 将来把token带给服务器请求数据
+        if (code == 200) {
+            console.log('登录成功');
+            commit('USER_LOGIN', result.data.token)
+            return { ok, message }
+        } 
+        console.log('登录失败');
+        return Promise.reject(new Error(message, ok))
     }
 }
 
 const mutations = {
     GET_CODE(state, code) {
         state.code = code
+    },
+    USER_LOGIN(state, token) {
+        state.token = token
     }
 }
 

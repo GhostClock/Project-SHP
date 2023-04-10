@@ -104,3 +104,15 @@ export const reqUserRegister = (data) => request({
     data,
     method: 'post'
 })
+
+// 用户登录
+// URL: /api/user/passport/login
+// phone	string
+// password	string
+// POST
+export const reqUserLogin = (data) => request({
+    url: '/user/passport/login',
+    data,
+    method: 'post'
+})
+
