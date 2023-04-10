@@ -3,6 +3,9 @@ module.exports = defineConfig({
   transpileDependencies: true,
   // eslint校验功能关闭
   lintOnSave: false,
+  configureWebpack: {
+    devtool: "source-map",
+  },
   // 代理跨域
   devServer: {
     proxy: {

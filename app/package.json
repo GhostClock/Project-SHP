@@ -44,7 +44,9 @@
       "requireConfigFile": false
     },
     "rules": {
-      "vue/multi-word-component-names": "off"
+      "vue/multi-word-component-names": "off",
+      "no-console": "off",
+      "no-debugger": "off"
     }
   },
   "browserslist": [

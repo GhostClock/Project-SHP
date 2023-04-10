@@ -84,3 +84,23 @@ export const reqUpdateCheckedById = (skuId, isChecked) => request({
     url: `cart/checkCart/${skuId}/${isChecked}`,
     method: 'get'
 })
+
+// 获取验证码
+// URL：/api/user/passport/sendCode/{phone}
+// GET
+export const reqGetCode = (phone) => request({
+    url: `user/passport/sendCode/${phone}`,
+    method: 'get'
+})
+
+// 注册用户
+// URL：/api/user/passport/register
+// phone	string	Y
+// password	string	Y
+// code	string	Y
+// POST
+export const reqUserRegister = (data) => request({
+    url: '/user/passport/register',
+    data,
+    method: 'post'
+})
