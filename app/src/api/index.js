@@ -116,3 +116,11 @@ export const reqUserLogin = (data) => request({
     method: 'post'
 })
 
+// 获取用户信息 带token向服务器获取信息
+// URL: api/user/passport/auth/getUserInfo
+// GET
+export const reqUserInfo = () => request({
+    url: '/user/passport/auth/getUserInfo',
+    method: 'get'
+})
+

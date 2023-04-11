@@ -11,3 +11,18 @@ export const getUUID = () => {
     }
     return uuid_token
 }
+
+// 保持Token
+export const saveToken = (token) => {
+    localStorage.removeItem('Token')
+    localStorage.setItem('Token', token)
+}
+
+// 获取Token
+export const getToken = () => {
+    const token = localStorage.getItem('Token')
+    if (token) {
+        return token
+    }
+    return ''
+}

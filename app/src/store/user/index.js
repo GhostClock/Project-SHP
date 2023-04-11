@@ -1,19 +1,15 @@
 // 登录和注册的仓库
 
-import { reqGetCode, reqUserRegister, reqUserLogin } from "@/api";
+import { reqGetCode, reqUserRegister, reqUserLogin, reqUserInfo } from "@/api";
+import { saveToken } from "@/utils/uuid_token";
 
 const state = {
     // 验证码
     code: '',
-
-    // name
-    name: '',
-
-    // nickName
-    nickName: '',
-
     // token
     token: '',
+    // 用户信息
+    userInfo: {},
 }
 
 const actions = {
@@ -59,6 +55,21 @@ const actions = {
         } 
         console.log('登录失败');
         return Promise.reject(new Error(message, ok))
+    },
+    // 获取用户信息
+    async userInfo({ commit }) {
+        let result = await reqUserInfo()
+        console.log('获取用户信息: ', result);
+        let code = result.code
+        let message = result.message
+        let ok = result.ok
+        if (code == 200) {
+            console.log('登录成功');
+            commit('GET_USERINFO', result.data)
+            return {ok, message}
+        }
+        console.log('登录失败');
+        return Promise.reject(new Error(message, ok))
     }
 }
 
@@ -68,11 +79,18 @@ const mutations = {
     },
     USER_LOGIN(state, token) {
         state.token = token
+        // 保存Token
+        saveToken(token)
+    },
+    GET_USERINFO(state, userInfo) {
+        state.userInfo = userInfo
     }
 }
 
 const getters = {
-    
+    userName(state) {
+        return state.userInfo.name
+    }
 }
 
 export default {

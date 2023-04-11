@@ -35,14 +35,28 @@ export default {
   },
   mounted() {
     // 派发action,获取floor组件的数据
-    this.$store.dispatch('getFloorList')
+    this.$store.dispatch('getFloorList'),
+    // 获取用户信息
+    this.getUserInfo()
   },
   computed: {
     ...mapState({
       flooList: state => state.home.floorList,
-
-    })
-  }
+    }),
+  },
+  methods: {
+      async getUserInfo() {
+        // 在首页获取用户信息
+        try {
+          const { ok, message } = await this.$store.dispatch('userInfo')
+          if (!ok) {
+            alert(message)
+          }
+        } catch (error) {
+          alert(error.message)
+        }
+      }
+  },
 }
 </script>
 
