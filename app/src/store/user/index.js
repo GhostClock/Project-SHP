@@ -1,7 +1,11 @@
 // 登录和注册的仓库
 
-import { reqGetCode, reqUserRegister, reqUserLogin, reqUserInfo } from "@/api";
-import { setToken, getToken } from "@/utils/token";
+import {
+    reqGetCode, reqUserRegister,
+    reqUserLogin, reqUserInfo,
+    reqUserLogout
+} from "@/api";
+import { setToken, getToken, remoteToken } from "@/utils/token";
 
 const state = {
     // 验证码
@@ -60,7 +64,7 @@ const actions = {
         return Promise.reject(new Error(message, ok))
     },
     // 获取用户信息
-    async getUserInfo({ commit }) {
+    async userInfo({ commit }) {
         let result = await reqUserInfo()
         console.log('获取用户信息: ', result);
         let code = result.code
@@ -72,6 +76,19 @@ const actions = {
             return {ok, message}
         }
         console.log('登录失败');
+        return Promise.reject(new Error(message, ok))
+    },
+    // 退出登录
+    async userLogout({ commit }) {
+        // 发起请求，通知服务器清除数据
+        let result = await reqUserLogout()
+        console.log("用户退出登录", result);
+        let message = result.message
+        let ok = result.ok
+        if (result.code == 200) {
+            commit('CLEAR_USER_INFO')
+            return {ok, message}
+        }
         return Promise.reject(new Error(message, ok))
     }
 }
@@ -85,6 +102,12 @@ const mutations = {
     },
     GET_USERINFO(state, userInfo) {
         state.userInfo = userInfo
+    },
+    CLEAR_USER_INFO(state) {
+        state.token = ''
+        state.userInfo = {}
+        // 清除本地缓存
+        remoteToken()
     }
 }
 

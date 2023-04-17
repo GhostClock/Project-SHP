@@ -124,3 +124,10 @@ export const reqUserInfo = () => request({
     method: 'get'
 })
 
+// 退出登录
+// URL: /api/user/passport/logout
+// GET
+export const reqUserLogout = () => request({
+    url: '/user/passport/logout',
+    method: 'get'
+})

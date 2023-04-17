@@ -48,7 +48,7 @@ export default {
       async getUserInfo() {
         // 在首页获取用户信息
         try {
-          const { ok, message } = await this.$store.dispatch('getUserInfo')
+          const { ok, message } = await this.$store.dispatch('userInfo')
           if (!ok) {
             alert(message)
           }

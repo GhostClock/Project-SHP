@@ -16,7 +16,7 @@
           <!-- 登录了，显示用户名 -->
           <p v-else>
             <a>{{ userName }}</a>
-            <a class="register">退出登录</a>
+            <a class="register" @click="logout">退出登录</a>
           </p>
         </div>
         <div class="typeList">
@@ -150,6 +150,19 @@
                 console.log('点击搜索：', location);
                 this.$router.push(location)
             } 
+          },
+          // 退出登录
+          logout() {
+            try {
+              // 退出登录需要做的事
+              // 1.需要发请求，通知服务器退出登录，清除一些数据 清除token
+              // 2.清除项目中的数据 userInfo token
+              this.$store.dispatch('userLogout')
+              // 回到首页
+              this.$router.push('/home')
+            } catch (error) {
+              alert(error.message)
+            }
           }
         },
         mounted() {

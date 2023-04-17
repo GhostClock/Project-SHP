@@ -14,3 +14,8 @@ export const getToken = () => {
     }
     return ''
 }
+
+// 清除本地存储的Token
+export const remoteToken = () => {
+    localStorage.removeItem('Token')
+}
