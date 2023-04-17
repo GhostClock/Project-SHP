@@ -1,13 +1,13 @@
 // 登录和注册的仓库
 
 import { reqGetCode, reqUserRegister, reqUserLogin, reqUserInfo } from "@/api";
-import { saveToken } from "@/utils/uuid_token";
+import { setToken, getToken } from "@/utils/token";
 
 const state = {
     // 验证码
     code: '',
     // token
-    token: '',
+    token: getToken(),
     // 用户信息
     userInfo: {},
 }
@@ -50,14 +50,17 @@ const actions = {
         // 将来把token带给服务器请求数据
         if (code == 200) {
             console.log('登录成功');
-            commit('USER_LOGIN', result.data.token)
+            let token = result.data.token
+            commit('USER_LOGIN', token)
+            // 持久化token
+            setToken(token)
             return { ok, message }
         } 
         console.log('登录失败');
         return Promise.reject(new Error(message, ok))
     },
     // 获取用户信息
-    async userInfo({ commit }) {
+    async getUserInfo({ commit }) {
         let result = await reqUserInfo()
         console.log('获取用户信息: ', result);
         let code = result.code
@@ -79,8 +82,6 @@ const mutations = {
     },
     USER_LOGIN(state, token) {
         state.token = token
-        // 保存Token
-        saveToken(token)
     },
     GET_USERINFO(state, userInfo) {
         state.userInfo = userInfo

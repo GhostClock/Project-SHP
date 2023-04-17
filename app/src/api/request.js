@@ -6,7 +6,6 @@ import axios from 'axios';
 import nprogress from 'nprogress';
 // 在当前模块中引入store
 import store from '@/store';
-import { getToken } from '@/utils/uuid_token'
 // 引入进度条的样式
 import 'nprogress/nprogress.css'
 // start:进度条开始 done：进度条结束
@@ -33,7 +32,7 @@ requests.interceptors.request.use((config) => {
         config.headers.userTempId = uuid_token
     }
     // 需要判断携带token带给服务器
-    let token = getToken()
+    let token = store.state.user.token
     if (token) {
         config.headers.token = token
     }
