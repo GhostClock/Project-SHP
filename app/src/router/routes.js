@@ -8,6 +8,7 @@ import Register from '@/pages/Register'
 import Detail from '@/pages/Detail'
 import AddCartSuccess from "@/pages/AddCartSuccess"
 import ShopCart from '@/pages/ShopCart';
+import Trade from '@/pages/Trade'
 
 // 配置路由信息
 export default [
@@ -79,6 +80,14 @@ export default [
         component: ShopCart,
         meta: {
             show: true
+        }
+    },
+    // 订单与支付
+    {
+        path: '/trade',
+        component: Trade,
+        meta: {
+            isShow: true
         }
     },
     // 重定向，在项目跑起来的时候。访问/，立马让其定向到首页

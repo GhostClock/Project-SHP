@@ -65,7 +65,7 @@
           <i class="summoney">{{ totalPrice }}</i>
         </div>
         <div class="sumbtn">
-          <a class="sum-btn" href="###" target="_blank">结算</a>
+          <a class="sum-btn" @click="goTrade">结算</a>
         </div>
       </div>
     </div>
@@ -170,6 +170,10 @@
           alert(error.message)
         }
       },
+      // 跳转到结算页面
+      goTrade() {
+        this.$router.push('/trade')
+      }
     },
     computed: {
       ...mapGetters(['cartInfoList']),
