@@ -131,3 +131,19 @@ export const reqUserLogout = () => request({
     url: '/user/passport/logout',
     method: 'get'
 })
+
+// 获取用户地址信息
+// URL:/api/user/userAddress/auth/findUserAddressList
+// GET
+export const reqAddressInfo = () => request({
+    url: '/user/userAddress/auth/findUserAddressList',
+    method: 'get'
+})
+
+// 获取订单交易页信息
+// URL:/api/order/auth/trade
+// GET
+export const reqOrderInfo = () => request({
+    url: '/order/auth/trade',
+    method: 'get'
+})

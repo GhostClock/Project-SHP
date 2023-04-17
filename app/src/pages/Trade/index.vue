@@ -96,7 +96,7 @@
         <h5>使用优惠/抵用</h5>
       </div>
     </div>
-    
+
     <div class="money clearFix">
       <ul>
         <li>
@@ -131,6 +131,10 @@
 <script>
   export default {
     name: 'Trade',
+    mounted() {
+      this.$store.dispatch('getUserAddress')
+      this.$store.dispatch('reqOrderInfo')
+    },
   }
 </script>
 
