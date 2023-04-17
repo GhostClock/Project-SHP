@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
+import store from '@/store'
 
 // 使用插件
 Vue.use(VueRouter)
@@ -34,7 +35,7 @@ VueRouter.prototype.replace = function replace(location, resolve, reject) {
 }
 
 // 配置路由
-export default new VueRouter({
+let router = new VueRouter({
     routes,
     // 滚动行为
     scrollBehavior (to, from, savedPosition) {
@@ -42,3 +43,49 @@ export default new VueRouter({
         return {x:0, y: 0}
     }
 })
+
+// 全局守卫、全局前置守卫, 在路由跳转之前进行判断
+router.beforeEach(async (to, from, next) => {
+    // to: 去哪个路由
+    // from: 来自哪个路由
+    // next: 放行的函数 写法：next()全放行  next(path)放行到指定的路由 next(false)中断当前导航
+
+    // 用户登录为才有token，未登录一定不会有token
+    let token = store.state.user.token
+    if (token) {
+        // 用户登录了
+        if (to.path == '/login' || to.path == '/register') {
+            // 已经登录了，就不能去登录页，直接回到首页,
+            next('/home')
+        } else {
+            // 去的不是登录页 home search detail shopcart
+            // 如果用户名已经有了，
+            // 用户信息
+            let name = store.state.user.userInfo.name
+            if (name) {
+                // 登录了，也有用户信息
+                next()
+            } else {
+                // 登录了，没有用户信息
+                try {
+                    // 没有用户信息 派发action，让仓库存储用户信息再存储
+                    await store.dispatch('userInfo')
+                    // 放行
+                    next()
+                } catch (error) {
+                    console.log(error.message);
+                    // token过期了
+                    // 清除token
+                    await store.dispatch('userLogout')
+                    next('/login')
+                }
+            }
+        }
+    } else {
+        // 未登录
+        // TODO： 暂时没有处理完毕，这个后期再处理
+        next()
+    }
+})
+
+export default router
