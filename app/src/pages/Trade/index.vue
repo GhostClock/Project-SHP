@@ -91,7 +91,7 @@
       </div>
     </div>
     <div class="sub clearFix">
-      <router-link class="subBtn" to="/pay">提交订单</router-link>
+      <a class="subBtn" @click="submitOrder">提交订单</a>
     </div>
   </div>
 </template>
@@ -128,6 +128,28 @@
           item.isDefault = '0'
         });
         address.isDefault = '1'
+      },
+      // 提交订单
+      async submitOrder() {
+        // 需要带参数 tradeNo, data
+        // 交易编号
+        let { tradeNo } = this.orderInfo
+        let data = {
+          // 收件人姓名
+          consignee: this.userDefaultAddress.consignee,
+          // 收件人的手机
+          consigneeTel: this.userDefaultAddress.phoneNum,
+          // 收件人地址
+          deliveryAddress: this.userDefaultAddress.fullAddress,
+          // 支付方式
+          paymentWay: "ONLINE",
+          // 留言信息
+          orderComment: this.msg,
+          // 商品清单
+          orderDetailList: this.orderInfo.detailArrayList
+        }
+        let result = await this.$API.reqSubmitOrder(tradeNo, data)
+        console.log('提交订单', result);
       }
     },
   }

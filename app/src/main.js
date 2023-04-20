@@ -22,7 +22,9 @@ import store from '@/store';
 import './mock/mockServe.js'
 // 引入swiper样式
 import 'swiper/css/swiper.css'
-
+// 统一接受api文件夹里面全部请求函数
+// 统一引入
+import * as API from '@/api'
 new Vue({
   render: h => h(App),
   // 注册路由,router必须小写
@@ -33,5 +35,6 @@ new Vue({
   // 配置全局事件总线 $bus
   beforeCreate() {
     Vue.prototype.$bus = this
+    Vue.prototype.$API = API
   },
 }).$mount('#app')

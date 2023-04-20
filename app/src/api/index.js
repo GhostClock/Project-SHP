@@ -147,3 +147,13 @@ export const reqOrderInfo = () => request({
     url: '/order/auth/trade',
     method: 'get'
 })
+
+// 提交订单
+// URL:/api/order/auth/submitOrder?tradeNo={tradeNo}
+// POST
+export const reqSubmitOrder = (tradeNo, data) => request({
+    url: `/order/auth/submitOrder?tradeNo=${tradeNo}`,
+    data,
+    method: 'post'
+})
+
