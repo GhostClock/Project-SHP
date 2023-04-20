@@ -9,6 +9,7 @@ import Detail from '@/pages/Detail'
 import AddCartSuccess from "@/pages/AddCartSuccess"
 import ShopCart from '@/pages/ShopCart';
 import Trade from '@/pages/Trade'
+import Pay from '@/pages/Pay'
 
 // 配置路由信息
 export default [
@@ -86,6 +87,14 @@ export default [
     {
         path: '/trade',
         component: Trade,
+        meta: {
+            isShow: true
+        }
+    },
+    // 支付
+    {
+        path: '/pay',
+        component: Pay,
         meta: {
             isShow: true
         }
