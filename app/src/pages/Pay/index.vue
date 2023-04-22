@@ -66,7 +66,7 @@
 
         <div class="submit">
           <!-- <router-link class="btn" to="/paysuccess">立即支付</router-link> -->
-          <a class="btn">立即支付</a>
+          <a class="btn" @click="open">立即支付</a>
         </div>
         <div class="otherpay">
           <div class="step-tit">
@@ -100,6 +100,7 @@
       this.getPayInfo()
     },
     methods: {
+      // 获取支付信息
       async getPayInfo() {
         let result = await this.$API.reqPayInfo(this.orderId)
         console.log('支付信息 ', result);
@@ -107,6 +108,22 @@
           // 成功组件中存储支付信息
           this.payInfo = result.data
         }
+      },
+      // 弹窗
+      open() {
+        this.$alert('<strong>这是 <i>HTML</i> 片段</strong>', 'HTML 片段', {
+          dangerouslyUseHTMLString: true,
+          // 居中显示
+          center: true,
+          // 显示取消按钮
+          showCancelButton: true,
+          // 取消按钮的文本内容
+          cancelButtonText: '支付遇见问题',
+          // 确定按钮的文本内容
+          confirmButtonText: '支付成功',
+          // 是否显示右上角关闭按钮
+          showClose: false,
+        });
       }
     },
   }
