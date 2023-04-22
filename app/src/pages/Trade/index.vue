@@ -104,6 +104,8 @@
       return {
         // 搜集买家的留言信息
         msg: '',
+        // 订单号
+        orderId: '',
       }
     },
     mounted() {
@@ -150,6 +152,15 @@
         }
         let result = await this.$API.reqSubmitOrder(tradeNo, data)
         console.log('提交订单', result);
+        if (result.code == 200) {
+          // 提交订单成功
+          this.orderId = result.data
+          // 跳转到支付页面
+          this.$router.push(`/pay?orderId=${this.orderId}`)
+        } else {
+          // 失败
+          alert(result.message)
+        }
       }
     },
   }
