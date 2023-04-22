@@ -10,6 +10,7 @@ import AddCartSuccess from "@/pages/AddCartSuccess"
 import ShopCart from '@/pages/ShopCart';
 import Trade from '@/pages/Trade'
 import Pay from '@/pages/Pay'
+import PaySuccess from '@/pages/PaySuccess'
 
 // 配置路由信息
 export default [
@@ -95,6 +96,14 @@ export default [
     {
         path: '/pay',
         component: Pay,
+        meta: {
+            isShow: true
+        }
+    },
+    // 支付成功
+    {
+        path: '/paysuccess',
+        component: PaySuccess,
         meta: {
             isShow: true
         }

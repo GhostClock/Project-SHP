@@ -83,11 +83,16 @@
 </template>
 
 <script>
+  import QRCode from 'qrcode'
   export default {
     name: 'Pay',
     data() {
       return {
         payInfo: {},
+        // 定时器
+        timer: null,
+        // 支付的状态码
+        code: 0
       }
     },
     computed: {
@@ -110,8 +115,11 @@
         }
       },
       // 弹窗
-      open() {
-        this.$alert('<strong>这是 <i>HTML</i> 片段</strong>', 'HTML 片段', {
+      async open() {
+        // 生成支付二维码
+        let qrUrl = await QRCode.toDataURL(this.payInfo.codeUrl)
+        console.log(qrUrl);
+        this.$alert(`<img src=${qrUrl} />`, '请您微信支付', {
           dangerouslyUseHTMLString: true,
           // 居中显示
           center: true,
@@ -120,10 +128,57 @@
           // 取消按钮的文本内容
           cancelButtonText: '支付遇见问题',
           // 确定按钮的文本内容
-          confirmButtonText: '支付成功',
+          confirmButtonText: '已支付成功',
           // 是否显示右上角关闭按钮
           showClose: false,
+          // 关闭弹出框的配置
+          beforeClose: (action, instance, done) => {
+            // action 的值为'confirm', 'cancel'或'close'
+            // instance 为 MessageBox 实例，可以通过它访问实例上的属性和方法；
+            // done 用于关闭 MessageBox 实例
+            if (action == 'cancel') {
+              alert('请联系管理员！！！')
+              clearInterval(this.timer)
+              this.timer = null
+              // 关闭弹出框
+              done()
+            } else {
+              // 判断是否真的支付成功
+              // TODO 本地调试去掉判断
+              // if (this.code == 200) {
+                clearInterval(this.timer)
+                this.timer = null
+                // 关闭弹出框
+                done()
+                // 跳转到下一页路由
+                this.$router.push('/paysuccess')
+              // }
+            }
+          }
         });
+
+        // 需要知道支付成功或者失败
+        // 支付成功 跳转路由 支付失败，提示信息
+        if (!this.timer) {
+          // 使用定时器进行长轮询
+          this.timer = setInterval(async() => {
+            // 发请求获取用户支付状态
+            let result = await this.$API.reqPayStatus(this.orderId)
+            console.log('支付信息', result);
+            if (result.code == 200) {
+              // 支付成功
+              // 清除定时器
+              clearInterval(this.timer)
+              this.timer = null
+              // 保存支付成功的code
+              this.code = result.code
+              // 关闭弹出框
+              this.$msgbox.close()
+              // 跳转到下一页路由
+              this.$router.push('/paysuccess')
+            }
+          }, 2000);
+        }
       }
     },
   }

@@ -165,3 +165,12 @@ export const reqPayInfo = (orderId) => request({
     method: 'get'
 })
 
+// 查询支付订单状态
+// URL /api/payment/weixin/queryPayStatus/{orderId}
+// GET
+export const reqPayStatus = (orderId) => request({
+    url: `/payment/weixin/queryPayStatus/${orderId}`,
+    method: 'get'
+})
+
+
