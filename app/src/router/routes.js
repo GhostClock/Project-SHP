@@ -11,6 +11,11 @@ import ShopCart from '@/pages/ShopCart';
 import Trade from '@/pages/Trade'
 import Pay from '@/pages/Pay'
 import PaySuccess from '@/pages/PaySuccess'
+import Center from '@/pages/Center'
+
+// 引入二级路由组件
+import MyOrder from '@/pages/Center/MyOrder'
+import GroupOrder from '@/pages/Center/GroupOrder'
 
 // 配置路由信息
 export default [
@@ -107,6 +112,30 @@ export default [
         meta: {
             isShow: true
         }
+    },
+    // 个人中心
+    {
+        path: '/center',
+        component: Center,
+        meta: {
+            isShow: true
+        },
+        // 二级路由组件
+        children: [
+            {
+                path: 'myorder',
+                component: MyOrder
+            },
+            {
+                path: 'grouporder',
+                component: GroupOrder
+            },
+            // 设置二级路由的重定向
+            {   
+                path: '/center',
+                redirect: '/center/myorder'
+            }
+        ],
     },
     // 重定向，在项目跑起来的时候。访问/，立马让其定向到首页
     {
