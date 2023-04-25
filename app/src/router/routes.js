@@ -89,31 +89,50 @@ export default [
             show: true
         }
     },
-    // 订单与支付
+    // Trade 订单页
     {
         path: '/trade',
         component: Trade,
         meta: {
             isShow: true
+        },
+        // 路由独享守卫
+        beforeEnter(to, from, next) {
+            // 去交易页，必须是从购物车(shopcart)过来
+            if (from.path == '/shopcart') {
+                next()
+                return
+            }
+            // 非购物车过来，停留在当前页
+            // next(false):中断当前的导航，如果浏览器的URL改变了（可能用户手动输入、也可能浏览器后退按钮），那么URL地址会重置到from路由对应的地址
+            next(false)
         }
     },
-    // 支付
+    // Pay 支付
     {
         path: '/pay',
         component: Pay,
         meta: {
             isShow: true
+        },
+        beforeEnter: (to, from, next) => {
+            // 去支付页，必须从订单页(trade)而来
+            if (from.path == '/trade') {
+                next()
+                return
+            }
+            next(false)
         }
     },
-    // 支付成功
+    // PaySuccess 支付成功
     {
         path: '/paysuccess',
         component: PaySuccess,
         meta: {
             isShow: true
-        }
+        },
     },
-    // 个人中心
+    // Center 个人中心
     {
         path: '/center',
         component: Center,
