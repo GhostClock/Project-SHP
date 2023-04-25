@@ -85,7 +85,9 @@
           const { ok, message } = await this.$store.dispatch('userLogin', {phone, password})
           if (ok) {
             // 登录成功 跳转到首页
-            this.$router.push('/home')
+            // 登录的路由组件: 检查路由当中是否包含query参数，有：跳转到query参数指定的路由，没有：跳转到Home路由
+            let toPath = this.$route.query.redirect || '/home'
+            this.$router.push(toPath)
             return 
           }
           // 登录失败
