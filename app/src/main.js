@@ -31,6 +31,17 @@ import 'swiper/css/swiper.css'
 // 统一接受api文件夹里面全部请求函数
 // 统一引入
 import * as API from '@/api'
+
+// 引入插件
+import VueLazyload from 'vue-lazyload'
+// 引入图片资源
+import lolita from '@/assets/lolita.gif'
+// 注册插件
+Vue.use(VueLazyload, {
+  // 懒加载默认图片
+  loading: lolita,
+})
+
 new Vue({
   render: h => h(App),
   // 注册路由,router必须小写
