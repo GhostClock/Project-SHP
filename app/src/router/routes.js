@@ -1,28 +1,16 @@
 // 配置路由信息
-
-// 引入一级路由组件
-import Home from '@/pages/Home'
-import Search from '@/pages/Search'
-import Login from '@/pages/Login'
-import Register from '@/pages/Register'
-import Detail from '@/pages/Detail'
-import AddCartSuccess from "@/pages/AddCartSuccess"
-import ShopCart from '@/pages/ShopCart';
-import Trade from '@/pages/Trade'
-import Pay from '@/pages/Pay'
-import PaySuccess from '@/pages/PaySuccess'
-import Center from '@/pages/Center'
-
-// 引入二级路由组件
-import MyOrder from '@/pages/Center/MyOrder'
-import GroupOrder from '@/pages/Center/GroupOrder'
-
+/*
+路由懒加载
+当打包构建时，JS打包会变得非常大，影响页面加载
+如果我们能把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件
+这样就更加高效了
+*/
 // 配置路由信息
 export default [
     // Home 主页
     {
         path: '/home',
-        component: Home,
+        component: () => import('@/pages/Home'), // 路由懒加载
         meta: {
             show: true
         }
@@ -30,7 +18,7 @@ export default [
     // Search 搜索
     {
         path: '/search/:keyword?',// parmas参数，用来占位，?表示可传可不传
-        component: Search,
+        component: () => import('@/pages/Search'),
         name: 'Search',
         meta: {
             show: true
@@ -50,7 +38,7 @@ export default [
     // Login 登录
     {
         path: '/login',
-        component: Login,
+        component: () => import('@/pages/Login'),
         meta: {
             show: false
         }
@@ -58,7 +46,7 @@ export default [
     // Register 注册
     {
         path: '/register',
-        component: Register,
+        component: () => import('@/pages/Register'),
         meta: {
             show: false
         }
@@ -66,7 +54,7 @@ export default [
     // Detail 商品详情
     {
         path: '/detail/:skuId',
-        component: Detail,
+        component: () => import('@/pages/Detail'),
         meta: {
             show: true
         }
@@ -75,7 +63,7 @@ export default [
     {
         path: '/addcartsuccess',
         name: 'AddCartSuccess',
-        component: AddCartSuccess,
+        component: () => import("@/pages/AddCartSuccess"),
         meta: {
             show: true
         }
@@ -84,7 +72,7 @@ export default [
     {
         path: '/shopcart',
         name: 'ShopCart',
-        component: ShopCart,
+        component: () => import('@/pages/ShopCart'),
         meta: {
             show: true
         }
@@ -92,7 +80,7 @@ export default [
     // Trade 订单页
     {
         path: '/trade',
-        component: Trade,
+        component: () => import('@/pages/Trade'),
         meta: {
             isShow: true
         },
@@ -111,7 +99,7 @@ export default [
     // Pay 支付
     {
         path: '/pay',
-        component: Pay,
+        component: () => import('@/pages/Pay'),
         meta: {
             isShow: true
         },
@@ -127,7 +115,7 @@ export default [
     // PaySuccess 支付成功
     {
         path: '/paysuccess',
-        component: PaySuccess,
+        component: () => import('@/pages/PaySuccess'),
         meta: {
             isShow: true
         },
@@ -135,7 +123,7 @@ export default [
     // Center 个人中心
     {
         path: '/center',
-        component: Center,
+        component: () => import('@/pages/Center'),
         meta: {
             isShow: true
         },
@@ -143,11 +131,11 @@ export default [
         children: [
             {
                 path: 'myorder',
-                component: MyOrder
+                component: () => import('@/pages/Center/MyOrder')
             },
             {
                 path: 'grouporder',
-                component: GroupOrder
+                component: () => import('@/pages/Center/GroupOrder')
             },
             // 设置二级路由的重定向
             {   

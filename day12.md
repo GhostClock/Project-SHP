@@ -61,5 +61,9 @@ getMessage: field => field + '必须同意'
     />
 })
 
+6.路由懒加载
+ component: () => import('@/pages/Home'), // 路由懒加载
+
+
 
 
