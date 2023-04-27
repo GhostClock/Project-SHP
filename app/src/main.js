@@ -42,6 +42,9 @@ Vue.use(VueLazyload, {
   loading: lolita,
 })
 
+// 引入表单校验插件
+import '@/plugins/validate'
+
 new Vue({
   render: h => h(App),
   // 注册路由,router必须小写
