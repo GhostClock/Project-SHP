@@ -64,6 +64,15 @@ getMessage: field => field + '必须同意'
 6.路由懒加载
  component: () => import('@/pages/Home'), // 路由懒加载
 
+7.打包上线
+7.1.打包
+    npm run build
+项目打包后，代码都是经过压缩加密的，如果运行时报错，输入的错误信息无法准确得知是哪里的代码报错
+有个map就可以想未加密的代码一样，准确的输入是哪一行哪一列有错
+所以该文件如果项目不需要是可以去除的
+配置map
+    vue.config.js
+    productionSourceMap: false
 
 
 
