@@ -144,6 +144,56 @@ export default [
             }
         ],
     },
+
+    // 组件间通信 高级技巧
+    {
+        path: '/communication',
+        component: () => import('@/pages/Communication/Communication'),
+        children:[
+            {
+                path: 'event',
+                component: () => import('@/pages/Communication/EventTest/EventTest'),
+                meta: {
+                    isHideFooter: true
+                }
+            },
+            {
+                path: 'model',
+                component: () => import('@/pages/Communication/ModeTest/ModeTest'),
+                meta: {
+                    isHideFooter: true
+                }
+            },
+            {
+                path: 'sync',
+                component: () => import('@/pages/Communication/SyncTest/SyncTest'),
+                meta: {
+                    isHideFooter: true
+                }
+            },
+            {
+                path: 'attrs-listeners',
+                component: () => import('@/pages/Communication/AttrsListenersTest/AttrsListenersTest'),
+                meta: {
+                    isHideFooter: true
+                }
+            },
+            {
+                path: 'children-parent',
+                component: () => import('@/pages/Communication/ChildrenparentTest/ChildrenparentTest'),
+                meta: {
+                    isHideFooter: true
+                }
+            },
+            {
+                path: 'scoped-slot',
+                component: () => import('@/pages/Communication/ScopedSlotTest/ScopedSlotTest'),
+                meta: {
+                    isHideFooter: true
+                }
+            },
+        ]
+    },
     // 重定向，在项目跑起来的时候。访问/，立马让其定向到首页
     {
         path: '*',
