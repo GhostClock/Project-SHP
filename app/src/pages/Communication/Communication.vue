@@ -28,9 +28,12 @@ a {
   margin-left: 20px;
 }
 a:hover {
-  color: red;
+  color: rgb(0, 255, 110);
 }
 .content {
   padding-left: 20px;
+}
+.router-link-active {
+  color: red;
 }
 </style>
