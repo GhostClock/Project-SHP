@@ -29,8 +29,10 @@ a {
 }
 a:hover {
   color: rgb(0, 255, 110);
+  text-decoration: none;
 }
 .content {
+  padding-top: 10px;
   padding-left: 20px;
 }
 .router-link-active {
