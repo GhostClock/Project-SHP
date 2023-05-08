@@ -192,6 +192,11 @@ export default [
                     isHideFooter: true
                 }
             },
+            // 设置二级路由重定向
+            {   
+                path: '/communication',
+                redirect: '/communication/event'
+            },
         ]
     },
     // 重定向，在项目跑起来的时候。访问/，立马让其定向到首页
